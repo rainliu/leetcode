@@ -32,14 +32,7 @@ public:
             while(l<h){
                 if(num[l+1]==num[l]){
                     l++;
-                }else if(num[h]==num[l]){
-                    h--;
-                }else{
-                    break;
-                }
-            }
-            while(l<h){
-                if(num[h-1]==num[h]){
+                }else if(num[h]==num[l] || num[h-1]==num[h]){
                     h--;
                 }else{
                     break;
