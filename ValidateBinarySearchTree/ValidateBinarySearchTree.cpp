@@ -60,10 +60,44 @@ public:
     }
 };
 
-int main(){
-	Solution s;
+class Solution2 {
+public:
+    bool isValidBST(TreeNode *root) {
+    	prev = NULL;
+    	return inOrder(root);
+    }
 
-	s.isValidBST(NULL);
+    bool inOrder(TreeNode *root){
+    	if(root==NULL) return true;
+    	
+    	bool result = true;
+
+    	if(root->left!=NULL) result = result && inOrder(root->left);
+
+    	if(prev!=NULL){
+    		result = result && (root->val > prev->val);
+    		cout << " " << result <<endl;
+    	}
+    	prev = root;
+    	cout << " " << prev <<endl;
+
+    	if(root->right!=NULL) result = result && inOrder(root->right);
+    
+    	return result;
+    }
+private:
+	TreeNode *prev;
+};
+
+
+int main(){
+	Solution2 s;
+
+	TreeNode root(1);
+	TreeNode left(1);
+	root.left = &left;
+
+	cout << s.isValidBST(&root) <<endl;
 	
 	return 0;
 } 
