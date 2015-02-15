@@ -31,13 +31,8 @@ public:
     bool isBalanced(TreeNode *root) {
     	if(root==NULL) return true;
 
-    	return balanced(root);
-    }
-
-    bool balanced(TreeNode *root){
-    	if(root==NULL) return true;
-    	return balanced(root->left) && balanced(root->right) &&
-    		abs(maxDepth(root->left)-maxDepth(root->right)) <= 1;
+    	return abs(maxDepth(root->left)-maxDepth(root->right)) <= 1 &&
+    		isBalanced(root->left) && isBalanced(root->right);
     }
 
     int maxDepth(TreeNode *root) {
