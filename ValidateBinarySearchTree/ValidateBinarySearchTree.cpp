@@ -76,10 +76,8 @@ public:
 
     	if(prev!=NULL){
     		result = result && (root->val > prev->val);
-    		cout << " " << result <<endl;
     	}
     	prev = root;
-    	cout << " " << prev <<endl;
 
     	if(root->right!=NULL) result = result && inOrder(root->right);
     
