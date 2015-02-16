@@ -47,64 +47,6 @@ private:
     stack<int> ministack;
 };
 
-class MinStack2 {
-public:
-    MinStack2(){
-        capacity = 1;
-        size = 0;
-        mainstack = new int[capacity];
-        ministack = new int[capacity];
-    }
-    ~MinStack2(){
-        delete []mainstack;
-        delete []ministack;
-    }
-public:
-    void push(int x) {
-        if(capacity<size+1){
-            int *mainstack2 = new int[size*2];
-            int *ministack2 = new int[size*2];
-            memcpy(mainstack2, mainstack, sizeof(int)*size);
-            memcpy(ministack2, ministack, sizeof(int)*size);
-            delete []mainstack;
-            delete []ministack;
-            mainstack = mainstack2;
-            ministack = ministack2;
-        }
-
-        mainstack[size] = x;
-        if(size==0){
-            ministack[size] = size;
-        }else{
-            if(x<mainstack[ministack[size-1]]){
-                ministack[size] = size;        
-            }else{
-                ministack[size] = ministack[size-1];
-            }
-        }
-        ++size;
-    }
-
-    void pop() {
-        --size;
-    }
-
-    int top() {
-        return mainstack[size-1];
-    }
-
-    int getMin() {
-        return mainstack[ministack[size-1]];
-    }
-
-private:
-    int capacity;
-    int size;
-    int *mainstack;
-    int *ministack;
-};
-
-
 int main(){
 	MinStack s;
 	
