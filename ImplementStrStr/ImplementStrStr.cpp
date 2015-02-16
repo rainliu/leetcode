@@ -26,7 +26,7 @@ public:
 
     	int hsize = strlen(haystack);
     	int nsize = strlen(needle);
-    	if(hsize==nsize && hsize==0) return 0;
+    	
     	if(hsize<nsize) return -1;    
     	
     	for(int i=0; i<=hsize-nsize; i++){
