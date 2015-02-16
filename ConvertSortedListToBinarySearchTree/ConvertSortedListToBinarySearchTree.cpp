@@ -31,7 +31,6 @@ struct TreeNode {
 class Solution {
 public:
     TreeNode *sortedListToBST(ListNode *head) {
-        if(head==NULL) return NULL;
         vector<int> num;
 
         while(head!=NULL){
