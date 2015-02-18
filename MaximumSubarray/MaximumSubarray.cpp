@@ -22,6 +22,52 @@ try coding another solution using the divide and conquer approach, which is more
 class Solution {
 public:
     int maxSubArray(int A[], int n) {
+       int b = 0;
+       int e = n-1;
+       return findSubArray(A, b, e);   
+    }
+
+    int findSubArray(int A[], int b, int e){
+       if(b==e){
+           return A[b];
+       }
+       int b1 = b;
+       int e1 = (e+b)/2;
+       int b2 = e1+1;
+       int e2 = e;
+       int left = findSubArray(A, b1, e1); 
+       int right= findSubArray(A, b2, e2); 
+       
+       int lmax = numeric_limits<int>::min();
+       int rmax = numeric_limits<int>::min();
+       int sum;
+       sum = 0;
+       for(int i=e1; i>=b1; --i){
+            sum+=A[i];
+            if(sum>lmax)
+                lmax = sum;
+       }
+       sum = 0;
+       for(int i=b2; i<=e2; i++){
+            sum+=A[i];
+            if(sum>rmax)
+                rmax = sum;
+       }
+       int mixed = lmax+rmax;
+
+       if(mixed>=left && mixed>=right){
+           return mixed;
+       }else if(left>=mixed && left>=right){
+           return left;
+       }else{
+           return right;
+       }
+    }
+};
+
+class Solution2 {
+public:
+    int maxSubArray(int A[], int n) {
         if(n==0) return 0;
         if(n==1) return A[0];
 
@@ -40,6 +86,8 @@ public:
         return result;
     }
 };
+
+
 int main(){
 	Solution s;
 	
