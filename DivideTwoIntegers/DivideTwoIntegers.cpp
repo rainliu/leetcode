@@ -1,0 +1,113 @@
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <unordered_map>
+#include <algorithm>
+#include <limits>
+
+using namespace std;
+
+/*
+Divide two integers without using multiplication, division and mod operator.
+
+If it is overflow, return MAX_INT.
+*/
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+    	if(divisor==0) return numeric_limits<int>::max();
+    	if(dividend==0) return 0;
+    	long long dividend2, divisor2;
+
+    	int sign[2];
+    	if(dividend>0){
+	    	sign[0] = 0;
+	    	dividend2 = (long long)dividend;
+	    }else{
+	    	sign[0] = 1;
+	    	dividend2 = -(long long)dividend;
+	    }
+	    if(divisor>0){
+	    	sign[1] = 0;
+	    	divisor2 = (long long)divisor;
+	    }else{
+	    	sign[1] = 1;
+	    	divisor2 = -(long long)divisor;
+	    }
+	    int s = (sign[0]+sign[1])&0x1;
+
+	    if(dividend2<divisor2) return 0;
+	    if(divisor2==1) return s?-dividend2:(dividend2>numeric_limits<int>::max()?numeric_limits<int>::max():dividend2);
+	    if(divisor2==2) return s?-(dividend2>>1):(dividend2>>1);
+	    
+	    int ret = 0;
+
+	    int k;
+	    do{
+	    	k = 0;
+		    while((divisor2<<k)<=dividend2){
+		    	k++;
+		    }
+		    ret += 1<<(k-1);
+
+		    dividend2-=divisor2<<(k-1);
+		}while(divisor2<dividend2);  
+
+    	return s?-ret:ret;
+    }
+};
+
+
+class Solution2 {
+public:
+    int divide(int dividend, int divisor) {
+    	if(divisor==0) return numeric_limits<int>::max();
+    	if(dividend==0) return 0;
+    	long long dividend2, divisor2;
+
+    	int sign[2];
+    	if(dividend>0){
+	    	sign[0] = 0;
+	    	dividend2 = (long long)dividend;
+	    }else{
+	    	sign[0] = 1;
+	    	dividend2 = -(long long)dividend;
+	    }
+	    if(divisor>0){
+	    	sign[1] = 0;
+	    	divisor2 = (long long)divisor;
+	    }else{
+	    	sign[1] = 1;
+	    	divisor2 = -(long long)divisor;
+	    }
+	    int s = (sign[0]+sign[1])&0x1;
+
+	    if(dividend2<divisor2) return 0;
+	    if(divisor2==1) return s?-dividend2:(dividend2>numeric_limits<int>::max()?numeric_limits<int>::max():dividend2);
+
+	    long long lo = 0;
+    	long long hi = dividend2;
+    	long long mi;
+    	while(lo<=hi){
+    		mi = lo+((hi-lo)>>1);
+    		long long mm = divisor2*mi;
+    		if(mm==dividend2) return s?-mi:mi;
+    		else if(mm>dividend2) hi=mi-1;
+    		else lo = mi+1;
+    	}
+    	return s?-hi:hi;
+    }
+};
+
+int main(){
+	Solution s;
+
+	cout<<"1/1="<<s.divide(1,1)<<endl;
+	cout<<"123/10="<<s.divide(123,10)<<endl;
+	cout<<"23/-7="<<s.divide(23,-7)<<endl;
+	cout<<"-2147483648/-1="<<s.divide(-2147483648,-1)<<endl;
+	cout<<"1026117192/-874002063="<<s.divide(1026117192, -874002063)<<endl;
+	cout<<"1036963541/-24409858="<<s.divide(1036963541, -24409858)<<endl;
+	return 0;
+}
