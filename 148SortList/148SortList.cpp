@@ -57,10 +57,8 @@ public:
     		}
     	}
     	if(min<head->val) LT=quickSort(LT, head);
-    	if(max>head->val) {
-    		GT=quickSort(head->next, tail);
-    		head->next = GT;
-    	}
+    	if(max>head->val) head->next=quickSort(head->next, tail);
+    	
     	return LT;
     }
 };
