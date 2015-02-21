@@ -31,7 +31,35 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+
 class Solution {
+public:
+    ListNode *removeNthFromEnd(ListNode *head, int n) {
+    	if(n<=0) return head;
+
+    	int m = 1;
+    	ListNode *p=head;
+    	ListNode *q=head;
+    	while(q!=nullptr&&m<n){
+    		q=q->next;
+    		m++;
+    	}
+    	ListNode *r=nullptr;
+    	while(q->next!=nullptr){
+    		q=q->next;
+    		r=p;
+    		p=p->next;
+    	}    
+    	if(r==nullptr){
+    		return p->next;
+    	}else{
+    		r->next=p->next;
+    		return head;
+    	}
+    }
+};
+
+class Solution2 {
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n) {
     	if(n<=0) return head;
