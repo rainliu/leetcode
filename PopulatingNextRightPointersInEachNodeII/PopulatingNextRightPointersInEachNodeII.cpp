@@ -45,23 +45,26 @@ class Solution {
 public:
     void connect(TreeLinkNode *root) {
         if(root==nullptr) return;  
-        root->next = nullptr;
-        connect2(root);
-    }
-
-    void connect2(TreeLinkNode *root) {
-        if(root==nullptr) return;  
-
+        
         if(root->left!=nullptr) {
-            root->left->next = root->right;
+            root->left->next = root->right!=nullptr? root->right: findRight(root->next);
         }
 
         if(root->right!=nullptr) {
-            root->right->next = root->next==nullptr?nullptr:(root->next->left==nullptr?root->next->right:root->next->left);
+            root->right->next = findRight(root->next);
         }
+        
+        connect(root->right);
+        connect(root->left);
+    }
 
-        connect2(root->left);
-        connect2(root->right);
+    TreeLinkNode *findRight(TreeLinkNode *root){
+        while(root!=nullptr&&root->left==nullptr&&root->right==nullptr){
+            root = root->next;
+        }
+        if(root==nullptr) return nullptr;
+        else if(root->left==nullptr) return root->right;
+        else return root->left;
     }
 };
 
