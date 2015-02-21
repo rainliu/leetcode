@@ -54,6 +54,30 @@ struct TreeLinkNode {
 class Solution {
 public:
     void connect(TreeLinkNode *root) {
+    	if(root==nullptr) return;  
+    	root->next = nullptr;
+    	connect2(root);
+    }
+
+    void connect2(TreeLinkNode *root) {
+    	if(root==nullptr) return;  
+
+    	if(root->left!=nullptr) {
+    		root->left->next = root->right;
+    	}
+
+    	if(root->right!=nullptr) {
+    		root->right->next = root->next==nullptr?nullptr:root->next->left;    		
+    	}
+
+    	connect2(root->left);
+    	connect2(root->right);
+    }
+};
+
+class Solution3 {
+public:
+    void connect(TreeLinkNode *root) {
     	if(root==nullptr) return;   
 
 		queue<TreeLinkNode *> q;
