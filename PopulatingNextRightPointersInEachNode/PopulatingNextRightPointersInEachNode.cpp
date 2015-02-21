@@ -54,6 +54,40 @@ struct TreeLinkNode {
 class Solution {
 public:
     void connect(TreeLinkNode *root) {
+    	if(root==nullptr) return;   
+
+		queue<TreeLinkNode *> q;
+
+     	int level = -1;
+     	TreeLinkNode *last_node=nullptr;
+     	
+     	q.push(root); 
+     	while(!q.empty()){
+     		root = q.front(); q.pop();
+     		level++;
+     		if(last_node!=nullptr) last_node->next = root;     			
+     		if(isLevelEnd(level)) {
+     			root->next = nullptr;
+     			last_node  = nullptr;
+     		}else{
+     			last_node  = root;
+     		}
+     		if(root->left!=nullptr)  {q.push(root->left);  }
+     		if(root->right!=nullptr) {q.push(root->right); }
+     	}     	
+    }
+
+    bool isLevelEnd(int level){
+    	if(level==0) return true;
+    	else{
+    		int sum=0;
+    		int i = 1;
+    		while(sum<level){
+    			sum+=1<<i;
+    			i++;
+    		}
+    		return level==sum;
+    	}
     }
 };
 
