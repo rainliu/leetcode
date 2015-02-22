@@ -10,9 +10,9 @@
 using namespace std;
 
 /*
-https://oj.leetcode.com/problems/linked-list-cycle/
+https://oj.leetcode.com/problems/linked-list-cycle-ii/
 
-Given a linked list, determine if it has a cycle in it.
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 
 Follow up:
 Can you solve it without using extra space?
@@ -25,54 +25,43 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+
 class Solution {
 public:
-    bool hasCycle(ListNode *head) {
-    	if(head==nullptr) return false;
-    	
-    	ListNode *p = nullptr;
-    	ListNode *q = head;
-    	ListNode *r = q->next;
-
-    	while(r!=nullptr&&r!=head){
-    		q->next = p;
-    		p = q;
-    		q = r;
-    		r = r->next;
-    	}
-
-    	return r==head;
-    }
-};
-
-class Solution2 {
-public:
-    bool hasCycle(ListNode *head) {
-        if(head==nullptr) return false;
+    ListNode *detectCycle(ListNode *head) {
+    	if(head==nullptr) return nullptr;
 
         ListNode *first=head;
         ListNode *second=head;
 
         do{
             first = first->next;
-            if(second->next==nullptr) return false;
+            if(second->next==nullptr) return nullptr;
             else second = second->next->next;
         }while(first!=nullptr&&second!=nullptr&&first!=second);
         
-        return first==second;
+        if(second==nullptr || first==nullptr) return nullptr;
+
+        first = head;
+        while(first!=second){
+        	first = first->next;
+        	second= second->next;
+        }
+    
+    	return first;
     }
 };
 
-class Solution3 {
+class Solution2 {
 public:
-    bool hasCycle(ListNode *head) {
-    	if(head==nullptr) return false;
+    ListNode *detectCycle(ListNode *head) {
+        if(head==nullptr) return nullptr;
 
     	unordered_map<ListNode *, bool> m;
 
     	do{
     		if(m.find(head)!=m.end()){
-    			return true;
+    			return head;
     		}else{
     			m[head] = false;
     		}
@@ -80,7 +69,7 @@ public:
     		head=head->next;
     	}while(head!=nullptr);
 
-    	return false;
+    	return nullptr;
     }
 };
 
