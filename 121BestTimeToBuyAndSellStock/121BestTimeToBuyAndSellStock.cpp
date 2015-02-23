@@ -47,6 +47,15 @@ public:
 };
 
 int main(){
+	Solution s;
+
+	{
+		vector<int> prices1{6, 1, 3, 2, 4, 7};
+		cout<<s.maxProfit(prices1)<<endl;
+
+		vector<int> prices2{3, 4, 5, 7, 1, 6};
+		cout<<s.maxProfit(prices2)<<endl;
+	}
 
 	return 0;
 }
