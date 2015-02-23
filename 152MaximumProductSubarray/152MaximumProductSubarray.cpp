@@ -18,7 +18,6 @@ For example, given the array [2,3,-2,4],
 the contiguous subarray [2,3] has the largest product = 6.
 */
 
-/*
 class Solution {
 public:
     int maxProduct(int A[], int n) {
@@ -28,16 +27,8 @@ public:
         e[0] = A[0];
         E[0] = A[0];
         for(int j=1; j<n; ++j){
-        	if(E[j-1]*A[j]>E[j-1]){
-        		E[j] = E[j-1]*A[j];
-        	}else{
-        		E[j] = A[j];
-        	}
-        	if(A[j]==0||A[j-1]==0){
-        		e[j] = A[j];
-        	}else{
-        		e[j] = e[j-1]*A[j];
-        	}
+        	E[j] = max(max(A[j],A[j]*E[j-1]), A[j]*e[j-1]);
+        	e[j] = min(min(A[j],A[j]*E[j-1]), A[j]*e[j-1]);
         }
 
         int m = numeric_limits<int>::min();
@@ -45,15 +36,11 @@ public:
         	if(E[j]>m){
         		m=E[j];
         	}
-        	if(e[j]>m){
-        		m=e[j];
-        	}
         }
 
         return m;
     }
 };
-*/
 
 int main(){
 	Solution s;
