@@ -4,6 +4,6 @@ Solutions:
 
 a). Brute-force: O(N^2) runtime, O(1) space
 
-b). Sorting and Binary Search: O(NlgN) runtime, O(1) space
+b). Sorting and Two Points (begin-> <-end): O(NlgN) runtime, O(1) space
 
-c). Hash map: O(N) runtime, O(N) space
+c). Hash Map: O(N) runtime, O(N) space
