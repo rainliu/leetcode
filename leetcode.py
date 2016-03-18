@@ -13,7 +13,7 @@ buf = StringIO.StringIO(root)
 golang_count = 0
 
 with open("leetcode_golang_support.csv", "w") as f:
-	f.write("#,URL,Title,Support,Difficulty,Acceptance\n");
+	f.write("#,URL,Title,Support,Difficulty,Locked\n");
 
 	lines = buf.readlines()
 	for idx, line_0 in enumerate(lines):
@@ -25,9 +25,11 @@ with open("leetcode_golang_support.csv", "w") as f:
 			#print number
 
 			extra_line_number = 0
+			locked = ''
 			isExtraLines = "fa fa-lock" in lines[idx+2]
 			if isExtraLines:
 				extra_line_number = 2
+				locked = 'Locked'
 
 			acceptance = lines[idx+3+extra_line_number].strip()
 			acceptance = string.replace(acceptance, '<td>', '');
@@ -59,7 +61,7 @@ with open("leetcode_golang_support.csv", "w") as f:
 					#print "golang"
 					break
 
-			print number+","+line+","+golang_exist+","+difficulty+","+acceptance+"\n"
-			f.write(number+","+line+","+golang_exist+","+difficulty+","+acceptance+"\n")	
+			print   number+","+line+","+golang_exist+","+difficulty+","+locked+"\n"
+			f.write(number+","+line+","+golang_exist+","+difficulty+","+locked+"\n")	
 
 print "Total golang count is: "+str(golang_count)
