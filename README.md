@@ -1,6 +1,6 @@
 leetcode
 ========
 
-g++ -std=c++11 cpp/example.cpp -o example.exe
+g++ -std=c++11 ./cpp/example/example.cpp -o example.exe
 
-go build go/example.cpp
+go test -v ./go/example/
