@@ -21,7 +21,7 @@
 319,https://leetcode.com/problems/bulb-switcher/,Bulb Switcher,,Medium,
 318,https://leetcode.com/problems/maximum-product-of-word-lengths/,Maximum Product of Word Lengths,,Medium,
 317,https://leetcode.com/problems/shortest-distance-from-all-buildings/,Shortest Distance from All Buildings,,Hard,Locked
-316,https://leetcode.com/problems/remove-duplicate-letters/,Remove Duplicate Letters,,Medium,
+316,https://leetcode.com/problems/remove-duplicate-letters/,Remove Duplicate Letters,,Hard,
 315,https://leetcode.com/problems/count-of-smaller-numbers-after-self/,Count of Smaller Numbers After Self,,Hard,
 314,https://leetcode.com/problems/binary-tree-vertical-order-traversal/,Binary Tree Vertical Order Traversal,,Medium,Locked
 313,https://leetcode.com/problems/super-ugly-number/,Super Ugly Number,,Medium,
@@ -296,7 +296,7 @@
 27,https://leetcode.com/problems/remove-element/,Remove Element,golang,Easy,
 26,https://leetcode.com/problems/remove-duplicates-from-sorted-array/,Remove Duplicates from Sorted Array,golang,Easy,
 25,https://leetcode.com/problems/reverse-nodes-in-k-group/,Reverse Nodes in k-Group,golang,Hard,
-24,https://leetcode.com/problems/swap-nodes-in-pairs/,Swap Nodes in Pairs,golang,Medium,
+24,https://leetcode.com/problems/swap-nodes-in-pairs/,Swap Nodes in Pairs,golang,Easy,
 23,https://leetcode.com/problems/merge-k-sorted-lists/,Merge k Sorted Lists,golang,Hard,
 22,https://leetcode.com/problems/generate-parentheses/,Generate Parentheses,golang,Medium,
 21,https://leetcode.com/problems/merge-two-sorted-lists/,Merge Two Sorted Lists,golang,Easy,
