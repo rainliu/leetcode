@@ -31,13 +31,13 @@ func main() {
 		return
 	}
 
-	fp_html, err := os.Create("leetcode.html")
+	/*fp_html, err := os.Create("leetcode.html")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Create file leetcode.html failed\n")
 		return
 	}
 	defer fp_html.Close()
-	fp_html.Write(root)
+	fp_html.Write(root)*/
 
 	fp_lang, err := os.Create("leetcode_" + lang + "_support.csv")
 	if err != nil {
