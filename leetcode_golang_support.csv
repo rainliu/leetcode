@@ -1,4 +1,11 @@
 #,URL,Title,Support,Difficulty,Locked
+359,https://leetcode.com/problems/logger-rate-limiter/,Logger Rate Limiter,,Easy,Locked
+358,https://leetcode.com/problems/rearrange-string-k-distance-apart/,Rearrange String k Distance Apart,,Hard,Locked
+357,https://leetcode.com/problems/count-numbers-with-unique-digits/,Count Numbers with Unique Digits,golang,Medium,
+356,https://leetcode.com/problems/line-reflection/,Line Reflection,,Medium,Locked
+355,https://leetcode.com/problems/design-twitter/,Design Twitter,golang,Medium,
+354,https://leetcode.com/problems/russian-doll-envelopes/,Russian Doll Envelopes,golang,Hard,
+353,https://leetcode.com/problems/design-snake-game/,Design Snake Game,,Medium,Locked
 352,https://leetcode.com/problems/data-stream-as-disjoint-intervals/,Data Stream as Disjoint Intervals,golang,Hard,
 351,https://leetcode.com/problems/android-unlock-patterns/,Android Unlock Patterns,,Medium,Locked
 350,https://leetcode.com/problems/intersection-of-two-arrays-ii/,Intersection of Two Arrays II,golang,Easy,
@@ -21,13 +28,13 @@
 333,https://leetcode.com/problems/largest-bst-subtree/,Largest BST Subtree,,Medium,Locked
 332,https://leetcode.com/problems/reconstruct-itinerary/,Reconstruct Itinerary,,Medium,
 331,https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/,Verify Preorder Serialization of a Binary Tree,,Medium,
-330,https://leetcode.com/problems/patching-array/,Patching Array,,Medium,
+330,https://leetcode.com/problems/patching-array/,Patching Array,,Hard,
 329,https://leetcode.com/problems/longest-increasing-path-in-a-matrix/,Longest Increasing Path in a Matrix,,Hard,
 328,https://leetcode.com/problems/odd-even-linked-list/,Odd Even Linked List,,Medium,
 327,https://leetcode.com/problems/count-of-range-sum/,Count of Range Sum,,Hard,
 326,https://leetcode.com/problems/power-of-three/,Power of Three,,Easy,
-325,https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/,Maximum Size Subarray Sum Equals k,,Easy,Locked
-324,https://leetcode.com/problems/wiggle-sort-ii/,Wiggle Sort II,,Medium,
+325,https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/,Maximum Size Subarray Sum Equals k,,Medium,Locked
+324,https://leetcode.com/problems/wiggle-sort-ii/,Wiggle Sort II,golang,Medium,
 323,https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/,Number of Connected Components in an Undirected Graph,,Medium,Locked
 322,https://leetcode.com/problems/coin-change/,Coin Change,,Medium,
 321,https://leetcode.com/problems/create-maximum-number/,Create Maximum Number,,Hard,
@@ -140,7 +147,7 @@
 213,https://leetcode.com/problems/house-robber-ii/,House Robber II,golang,Medium,
 212,https://leetcode.com/problems/word-search-ii/,Word Search II,golang,Hard,
 211,https://leetcode.com/problems/add-and-search-word-data-structure-design/,Add and Search Word - Data structure design,,Medium,
-210,https://leetcode.com/problems/course-schedule-ii/,Course Schedule II,,Medium,
+210,https://leetcode.com/problems/course-schedule-ii/,Course Schedule II,golang,Medium,
 209,https://leetcode.com/problems/minimum-size-subarray-sum/,Minimum Size Subarray Sum,golang,Medium,
 208,https://leetcode.com/problems/implement-trie-prefix-tree/,Implement Trie (Prefix Tree),,Medium,
 207,https://leetcode.com/problems/course-schedule/,Course Schedule,golang,Medium,
@@ -172,7 +179,7 @@
 165,https://leetcode.com/problems/compare-version-numbers/,Compare Version Numbers,golang,Easy,
 164,https://leetcode.com/problems/maximum-gap/,Maximum Gap,golang,Hard,
 163,https://leetcode.com/problems/missing-ranges/,Missing Ranges,,Medium,Locked
-162,https://leetcode.com/problems/find-peak-element/,Find Peak Element,,Medium,
+162,https://leetcode.com/problems/find-peak-element/,Find Peak Element,golang,Medium,
 161,https://leetcode.com/problems/one-edit-distance/,One Edit Distance,,Medium,Locked
 160,https://leetcode.com/problems/intersection-of-two-linked-lists/,Intersection of Two Linked Lists,,Easy,
 159,https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/,Longest Substring with At Most Two Distinct Characters,,Hard,Locked
