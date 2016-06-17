@@ -5,26 +5,38 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"sort"
+	"strconv"
 	"strings"
 )
 
 type langSupport struct {
-	number     string
+	number     int
 	line       string
 	lang       string
 	difficulty string
 	locked     string
 }
 
-func findLang(out chan<- langSupport, lines []string, idx int, lang string) error {
+type langSupportSlice []langSupport
+
+func (l langSupportSlice) Len() int           { return len(l) }
+func (l langSupportSlice) Less(i, j int) bool { return l[i].number < l[j].number }
+func (l langSupportSlice) Swap(i, j int)      { l[i], l[j] = l[j], l[i] }
+
+func findLang(out chan<- langSupport, lines []string, idx int, lang string) (err error) {
 	prefix := "https://leetcode.com"
 
 	var ls langSupport
 
-	ls.number = strings.TrimSpace(lines[idx-2])
-	ls.number = strings.Replace(ls.number, "<td>", "", -1)
-	ls.number = strings.Replace(ls.number, "</td>", "", -1)
-	//print number
+	number := strings.TrimSpace(lines[idx-2])
+	number = strings.Replace(number, "<td>", "", -1)
+	number = strings.Replace(number, "</td>", "", -1)
+	ls.number, err = strconv.Atoi(number)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parse number error: %v\n", err)
+		return err
+	}
 
 	extraLineNumber := 0
 	ls.locked = ""
@@ -109,20 +121,20 @@ func main() {
 	defer fp_html.Close()
 	fp_html.Write(root)*/
 
-	fp_lang, err := os.Create("leetcode_" + lang + "_support.csv")
+	fpLang, err := os.Create("leetcode_" + lang + "_support.csv")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Create file leetcode_lang_support.csv failed\n")
 		return
 	}
-	defer fp_lang.Close()
+	defer fpLang.Close()
 
-	fp_lang.WriteString("#,URL,Title,Support,Difficulty,Locked\n")
+	fpLang.WriteString("#,URL,Title,Support,Difficulty,Locked\n")
 
-	langSupportChan := make(chan langSupport)
+	langSupportChan := make(chan langSupport, 8)
 	count := 0
 	lines := strings.Split(string(root), "\n")
-	for idx, line_0 := range lines {
-		isSubstring := strings.Contains(line_0, "<a href=\"/problems/")
+	for idx, line := range lines {
+		isSubstring := strings.Contains(line, "<a href=\"/problems/")
 		if isSubstring {
 			count++
 			go findLang(langSupportChan, lines, idx, lang)
@@ -130,9 +142,15 @@ func main() {
 		}
 	}
 
+	lss := make(langSupportSlice, count)
 	for i := 0; i < count; i++ {
-		ls := <-langSupportChan
-		print(ls.number + "," + ls.line + "," + ls.lang + "," + ls.difficulty + "," + ls.locked + "\n")
-		fp_lang.WriteString(ls.number + "," + ls.line + "," + ls.lang + "," + ls.difficulty + "," + ls.locked + "\n")
+		lss[i] = <-langSupportChan
+		print(strconv.Itoa(lss[i].number) + "," + lss[i].line + "," + lss[i].lang + "," + lss[i].difficulty + "," + lss[i].locked + "\n")
+	}
+
+	sort.Sort(lss)
+
+	for i := 0; i < count; i++ {
+		fpLang.WriteString(strconv.Itoa(lss[i].number) + "," + lss[i].line + "," + lss[i].lang + "," + lss[i].difficulty + "," + lss[i].locked + "\n")
 	}
 }
