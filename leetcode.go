@@ -9,28 +9,29 @@ import (
 )
 
 type langSupport struct {
-	number     int
-	url        string
-	title      string
-	support    bool
-	difficulty int
-	locked     bool
+	number     string
+	line       string
+	lang       string
+	difficulty string
+	locked     string
 }
 
-func findLang(lines []string, idx int, lang string) (number, line, lang_exist, difficulty, locked string) {
+func findLang(out chan<- langSupport, lines []string, idx int, lang string) error {
 	prefix := "https://leetcode.com"
 
-	number = strings.TrimSpace(lines[idx-2])
-	number = strings.Replace(number, "<td>", "", -1)
-	number = strings.Replace(number, "</td>", "", -1)
+	var ls langSupport
+
+	ls.number = strings.TrimSpace(lines[idx-2])
+	ls.number = strings.Replace(ls.number, "<td>", "", -1)
+	ls.number = strings.Replace(ls.number, "</td>", "", -1)
 	//print number
 
 	extraLineNumber := 0
-	locked = ""
+	ls.locked = ""
 	isExtraLines := strings.Contains(lines[idx+2], "fa fa-lock")
 	if isExtraLines {
 		extraLineNumber = 2
-		locked = "Locked"
+		ls.locked = "Locked"
 	}
 
 	isEditorial := strings.Contains(lines[idx+6+extraLineNumber], "true")
@@ -38,43 +39,44 @@ func findLang(lines []string, idx int, lang string) (number, line, lang_exist, d
 		extraLineNumber += 9
 	}
 
-	difficulty = strings.TrimSpace(lines[idx+10+extraLineNumber])
-	difficulty = strings.Replace(difficulty, "</td>", "", -1)
-	i := strings.Index(difficulty, ">")
-	difficulty = strings.Replace(difficulty, difficulty[0:i+1], "", -1)
-	//print difficulty
+	ls.difficulty = strings.TrimSpace(lines[idx+10+extraLineNumber])
+	ls.difficulty = strings.Replace(ls.difficulty, "</td>", "", -1)
+	i := strings.Index(ls.difficulty, ">")
+	ls.difficulty = strings.Replace(ls.difficulty, ls.difficulty[0:i+1], "", -1)
 
-	line = strings.TrimSpace(lines[idx])
-	line = strings.Replace(line, ",", "", -1) //remove ',' between pow(x,n)
-	line = strings.Replace(line, "<a href=\"", prefix, -1)
-	line = strings.Replace(line, "\">", ",", 1)
-	line = strings.Replace(line, "</a>", "", -1)
-	split_fields := strings.Split(line, ",")
-	//print split_fields
+	ls.line = strings.TrimSpace(lines[idx])
+	ls.line = strings.Replace(ls.line, ",", "", -1) //remove ',' between pow(x,n)
+	ls.line = strings.Replace(ls.line, "<a href=\"", prefix, -1)
+	ls.line = strings.Replace(ls.line, "\">", ",", 1)
+	ls.line = strings.Replace(ls.line, "</a>", "", -1)
+	splitFields := strings.Split(ls.line, ",")
 
 	//////////////////////////////////////////
-	resp2, err := http.Get(split_fields[0])
+	resp2, err := http.Get(splitFields[0])
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "fetch %s: %v\n", split_fields[0], err)
-		return
+		fmt.Fprintf(os.Stderr, "fetch %s: %v\n", splitFields[0], err)
+		return err
 	}
 	problem, err := ioutil.ReadAll(resp2.Body)
 	resp2.Body.Close()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "fetch: reading %s: %v\n", split_fields[0], err)
-		return
+		fmt.Fprintf(os.Stderr, "fetch: reading %s: %v\n", splitFields[0], err)
+		return err
 	}
 
-	lang_exist = ""
+	ls.lang = ""
 	buf2 := strings.Split(string(problem), "\n")
 	for _, line2 := range buf2 {
 		isSubstring2 := strings.Contains(line2, lang)
 		if isSubstring2 {
-			lang_exist = lang
+			ls.lang = lang
 			break
 		}
 	}
-	return
+
+	out <- ls
+
+	return nil
 }
 
 func main() {
@@ -116,14 +118,21 @@ func main() {
 
 	fp_lang.WriteString("#,URL,Title,Support,Difficulty,Locked\n")
 
+	langSupportChan := make(chan langSupport)
+	count := 0
 	lines := strings.Split(string(root), "\n")
 	for idx, line_0 := range lines {
 		isSubstring := strings.Contains(line_0, "<a href=\"/problems/")
 		if isSubstring {
-			number, line, lang_exist, difficulty, locked := findLang(lines, idx, lang)
+			count++
+			go findLang(langSupportChan, lines, idx, lang)
 
-			print(number + "," + line + "," + lang_exist + "," + difficulty + "," + locked + "\n")
-			fp_lang.WriteString(number + "," + line + "," + lang_exist + "," + difficulty + "," + locked + "\n")
 		}
+	}
+
+	for i := 0; i < count; i++ {
+		ls := <-langSupportChan
+		print(ls.number + "," + ls.line + "," + ls.lang + "," + ls.difficulty + "," + ls.locked + "\n")
+		fp_lang.WriteString(ls.number + "," + ls.line + "," + ls.lang + "," + ls.difficulty + "," + ls.locked + "\n")
 	}
 }
