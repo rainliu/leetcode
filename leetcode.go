@@ -138,7 +138,6 @@ func main() {
 		if isSubstring {
 			count++
 			go findLang(langSupportChan, lines, idx, lang)
-
 		}
 	}
 
