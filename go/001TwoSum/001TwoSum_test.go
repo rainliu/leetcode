@@ -4,9 +4,8 @@ import (
 	"testing"
 )
 
-
 func TestTwoSum(t *testing.T) {
-	nums :=[][]int{
+	nums := [][]int{
 		{2, 7, 11, 15},
 		{2, 7, 11, 15},
 		{2, 7, 11, 15},
@@ -23,12 +22,12 @@ func TestTwoSum(t *testing.T) {
 		{1, 2},
 		{0, 3},
 	}
-	
-	for i:=0; i<len(target); i++{
+
+	for i := 0; i < len(target); i++ {
 		result := twoSum(nums[i], target[i])
-		if golden[i][0]==result[0]&&golden[i][1]==result[1] {
+		if golden[i][0] == result[0] && golden[i][1] == result[1] {
 			t.Log("Passing")
-		}else{
+		} else {
 			t.Fail()
 		}
 	}

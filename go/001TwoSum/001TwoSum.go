@@ -15,20 +15,15 @@ The return format had been changed to zero-based indices. Please read the above 
 */
 
 func twoSum(nums []int, target int) []int {
-	if len(nums) < 2 {
-		return []int{-1,-1}
-	}
+	m := make(map[int]int, len(nums))
 
-	minus_map := make(map[int]int, len(nums))
-
-	minus_map[target-nums[0]] = 0
-	for i:=1; i<len(nums); i++ {
-		if idx, ok := minus_map[nums[i]]; ok {
+	for i := 0; i < len(nums); i++ {
+		if idx, ok := m[nums[i]]; ok {
 			return []int{idx, i}
-		}else{
-			minus_map[target-nums[i]] = i
+		} else {
+			m[target-nums[i]] = i
 		}
 	}
 
-	return []int{-1,-1}
+	return []int{0, 0}
 }
