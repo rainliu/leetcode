@@ -46,7 +46,7 @@ int main(){
 	cout<<s.isPalindrome(0)<<endl;
 	cout<<s.isPalindrome(1234)<<endl;
 	cout<<s.isPalindrome(1221)<<endl;
-	cout<<s.isPalindrome(121)<<endl;
+	cout<<s.isPalindrome(-2147447412)<<endl;
 
 	return 0;
 }
