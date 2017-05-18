@@ -20,8 +20,8 @@ func myAtoi(str string) int {
 	val := 0
 	for i < n && str[i] >= '0' && str[i] <= '9' {
 		d := int(str[i] - '0')
-		if (sign && (val > math.MaxInt32/10 || (val == math.MaxInt32/10 && d >= 7))) ||
-			(!sign && (val > math.MaxInt32/10 || (val == math.MaxInt32/10 && d >= 8))) {
+		if (sign && (val > math.MaxInt32/10 || (val == math.MaxInt32/10 && d >= 8))) ||
+			(!sign && (val > math.MaxInt32/10 || (val == math.MaxInt32/10 && d >= 7))) {
 			if sign {
 				return math.MinInt32
 			} else {
