@@ -3,11 +3,11 @@ package main
 import "fmt"
 import "math"
 
-func abs(a int) int {
+func abs(a int) int64 {
 	if a < 0 {
-		return -a
+		return -int64(a)
 	}
-	return a
+	return int64(a)
 }
 func divide(dividend int, divisor int) int {
 	if divisor == 0 {
@@ -31,17 +31,17 @@ func divide(dividend int, divisor int) int {
 	if (dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0) {
 		sign = true
 	}
-	dividend = abs(dividend)
-	divisor = abs(divisor)
+	dividend2 := abs(dividend)
+	divisor2 := abs(divisor)
 	result := 0
-	for dividend >= divisor {
+	for dividend2 >= divisor2 {
 		n := uint(1)
-		for divisor <= dividend>>n {
+		for divisor2 <= dividend2>>n {
 			n++
 		}
 		if n >= 1 {
 			result += 1 << (n - 1)
-			dividend -= divisor << (n - 1)
+			dividend2 -= divisor2 << (n - 1)
 		}
 	}
 	if sign {
