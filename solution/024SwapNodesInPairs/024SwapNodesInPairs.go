@@ -14,11 +14,9 @@ func swapPairs(head *ListNode) *ListNode {
 	for r.Next != nil && r.Next.Next != nil {
 		e := r.Next
 		o := r.Next.Next
-
 		r.Next = o
 		e.Next = o.Next
 		o.Next = e
-
 		r = r.Next.Next
 	}
 	return dummy.Next
