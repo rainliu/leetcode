@@ -24,6 +24,27 @@ func canJump(nums []int) bool {
 	return i >= n-1
 }
 
+func canJump2(nums []int) bool {
+	n := len(nums)
+	if n == 0 {
+		return false
+	}
+	local := 0
+	global := 0
+	for i := 1; i < n; i++ {
+		if local+nums[local] >= i {
+			if local+nums[local] < i+nums[i] {
+				local = i
+			}
+		}
+		if global < local {
+			global = local
+		}
+	}
+
+	return global+nums[global] >= n-1
+}
+
 func main() {
 	fmt.Printf("true  vs %v\n", canJump([]int{0}))
 	fmt.Printf("true  vs %v\n", canJump([]int{1}))
