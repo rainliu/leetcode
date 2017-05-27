@@ -12,6 +12,7 @@ func sortColors(nums []int) {
 		if nums[k] < 1 {
 			nums[i], nums[k] = nums[k], nums[i]
 			i++
+			k++
 		} else if nums[k] > 1 {
 			nums[j], nums[k] = nums[k], nums[j]
 			j--
