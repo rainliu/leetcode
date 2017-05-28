@@ -10,7 +10,6 @@ var direction_y = []int{0, 0, -1, +1}
 func dfs(board [][]byte, word string, i, j, m, n int, visited []bool, pos int) bool {
 	pos++
 	visited[j*m+i] = true
-	result := false
 	if pos < len(word) && word[pos] == board[j][i] {
 		if pos == len(word)-1 {
 			return true
@@ -21,18 +20,15 @@ func dfs(board [][]byte, word string, i, j, m, n int, visited []bool, pos int) b
 					i+direction_x[k] >= 0 &&
 					i+direction_x[k] < m &&
 					!visited[(j+direction_y[k])*m+i+direction_x[k]] {
-					visited_clone := make([]bool, m*n)
-					copy(visited_clone, visited)
-					if dfs(board, word, i+direction_x[k], j+direction_y[k], m, n, visited_clone, pos) {
+					if dfs(board, word, i+direction_x[k], j+direction_y[k], m, n, visited, pos) {
 						return true
 					}
 				}
 			}
 		}
-	} else {
-		result = result || false
 	}
-	return result
+	visited[j*m+i] = false
+	return false
 }
 
 func exist(board [][]byte, word string) bool {
@@ -47,9 +43,9 @@ func exist(board [][]byte, word string) bool {
 	if m == 0 {
 		return false
 	}
+	visited := make([]bool, m*n)
 	for j := 0; j < n; j++ {
 		for i := 0; i < m; i++ {
-			visited := make([]bool, m*n)
 			pos := -1
 			if dfs(board, word, i, j, m, n, visited, pos) {
 				return true
