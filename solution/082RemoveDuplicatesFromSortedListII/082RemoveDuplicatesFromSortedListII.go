@@ -34,7 +34,9 @@ func deleteDuplicates(head *ListNode) *ListNode {
 			q = q.Next
 		}
 	}
-	p.Next = q
+	if duplicated {
+		r.Next = q
+	}
 
 	return dummy.Next
 }
