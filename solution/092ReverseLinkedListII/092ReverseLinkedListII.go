@@ -9,9 +9,6 @@ type ListNode struct {
 }
 
 func reverseBetween(head *ListNode, m int, n int) *ListNode {
-	if m >= n {
-		return head
-	}
 	dummy := ListNode{0, head}
 	p := &dummy
 	q := p.Next
