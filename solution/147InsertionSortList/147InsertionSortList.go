@@ -17,7 +17,7 @@ func insertionSortList(head *ListNode) *ListNode {
 
 		l := &dummy
 		o := dummy.Next
-		for o != p && o.Val < p.Val {
+		for o != p && o.Val <= p.Val {
 			l = l.Next
 			o = o.Next
 		}
