@@ -20,13 +20,6 @@ func min3(a, b, c int) int {
 		return c
 	}
 }
-func min2(a, b int) int {
-	if a < b {
-		return a
-	} else {
-		return b
-	}
-}
 func maxProduct(nums []int) int {
 	n := len(nums)
 	localMax := nums[0]
@@ -39,7 +32,7 @@ func maxProduct(nums []int) int {
 		if localMax > global {
 			global = localMax
 		}
-		fmt.Printf("(%d,%d,%d) ", localMax, localMin, global)
+		//fmt.Printf("(%d,%d,%d) ", localMax, localMin, global)
 	}
 	return global
 }
