@@ -20,7 +20,7 @@ func findPeakElement(nums []int) int {
 		} else {
 			right = nums[i+1]
 		}
-		if nums[i] >= left && nums[i] <= right && nums[i] > global {
+		if nums[i] >= left && nums[i] >= right && nums[i] > global {
 			global = nums[i]
 			index = i
 		}
