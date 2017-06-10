@@ -41,13 +41,49 @@ func backtracking(nums, a []int, k, n int, target *int) string {
 }
 
 //this backtracking solution Timeout for getPermutation(9, 161191)
-func getPermutation(n int, k int) string {
+func getPermutation1(n int, k int) string {
 	nums := make([]int, n)
 	for i := 0; i < n; i++ {
 		nums[i] = i + 1
 	}
 	var a []int
 	return backtracking(nums, a, 0, n, &k)
+}
+
+func remove(nums []byte, k int) []byte {
+	for i := k; i < len(nums)-1; i++ {
+		nums[i] = nums[i+1]
+	}
+	return nums[:len(nums)-1]
+}
+func perm(n int) int {
+	sum := 1
+	for i := 1; i <= n; i++ {
+		sum *= i
+	}
+	return sum
+}
+func getPermutation(n int, k int) string {
+	if k <= 0 {
+		return ""
+	}
+
+	var nums []byte
+	for i := 0; i < n; i++ {
+		nums = append(nums, '1'+byte(i))
+	}
+	var result []byte
+
+	k--
+	for i := n - 1; i >= 0; i-- {
+		p := perm(i)
+		j := k / p
+		k = k % p
+		result = append(result, nums[j])
+		remove(nums, j)
+	}
+	//fmt.Printf("%v\n", result)
+	return string(result)
 }
 
 func main() {
