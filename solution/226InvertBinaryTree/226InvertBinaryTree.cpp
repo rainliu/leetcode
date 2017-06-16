@@ -16,7 +16,7 @@ public:
     if (root != nullptr) {
       TreeNode *tmp = root->left;
       root->left = invertTree(root->right);
-      root->right = invertTree(root->left);
+      root->right = invertTree(tmp);
     }
     return root;
   }
