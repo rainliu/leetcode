@@ -14,22 +14,10 @@ public:
   bool isAnagram(string s, string t) {
     unordered_map<char, int> m;
     for (auto &c : s) {
-      if (m.find(c) == m.end()) {
-        m[c] = 1;
-      } else {
-        m[c] = m[c] + 1;
-      }
+      m[c]++;
     }
     for (auto &c : t) {
-      if (m.find(c) == m.end()) {
-        return false;
-      } else {
-        if (m[c] == 0) {
-          return false;
-        } else {
-          m[c] = m[c] - 1;
-        }
-      }
+      m[c]--;
     }
     for (auto &p : m) {
       if (p.second != 0) {
