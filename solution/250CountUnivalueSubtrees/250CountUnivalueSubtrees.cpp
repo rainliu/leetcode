@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 using namespace std;
 
 /**
@@ -10,35 +11,36 @@ struct TreeNode {
   TreeNode *right;
   TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
+
 class Solution {
 private:
-  vector<int> countUnivalSubtreesHelper(TreeNode *root) {
+  pair<int, bool> countUnivalSubtreesHelper(TreeNode *root) {
     if (root == nullptr) {
-      return vector<int>{0, 1};
+      return make_pair(0, true);
     } else if (root->left == nullptr && root->right == nullptr) {
-      return vector<int>{1, 1};
+      return make_pair(1, true);
     } else if (root->left != nullptr && root->right == nullptr) {
       auto l = countUnivalSubtreesHelper(root->left);
-      if (l[1] && root->val == root->left->val) {
-        return vector<int>{1 + l[0], 1};
+      if (l.second && root->val == root->left->val) {
+        return make_pair(1 + l.first, true);
       } else {
-        return vector<int>{l[0], 0};
+        return make_pair(l.first, false);
       }
     } else if (root->left == nullptr && root->right != nullptr) {
       auto r = countUnivalSubtreesHelper(root->right);
-      if (r[1] && root->val == root->right->val) {
-        return vector<int>{1 + r[0], 1};
+      if (r.second && root->val == root->right->val) {
+        return make_pair(1 + r.first, true);
       } else {
-        return vector<int>{r[0], 0};
+        return make_pair(r.first, false);
       }
     } else {
       auto l = countUnivalSubtreesHelper(root->left);
       auto r = countUnivalSubtreesHelper(root->right);
-      if (l[1] && r[1] && root->val == root->left->val &&
+      if (l.second && r.second && root->val == root->left->val &&
           root->val == root->right->val) {
-        return vector<int>{1 + l[0] + r[0], 1};
+        return make_pair(1 + l.first + r.first, true);
       } else {
-        return vector<int>{l[0] + r[0], 0};
+        return make_pair(l.first + r.first, false);
       }
     }
   }
@@ -46,7 +48,7 @@ private:
 public:
   int countUnivalSubtrees(TreeNode *root) {
     auto r = countUnivalSubtreesHelper(root);
-    return r[0];
+    return r.first;
   }
 };
 
