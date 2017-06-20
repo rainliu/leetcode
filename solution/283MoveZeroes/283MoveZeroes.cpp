@@ -4,7 +4,7 @@ using namespace std;
 
 class Solution {
 public:
-  void moveZeroes(vector<int> &nums) {
+  void moveZeroes1(vector<int> &nums) {
     int n = nums.size();
     for (int i = 1; i < n; i++) {
       for (int j = i; j > 0; j--) {
@@ -14,6 +14,17 @@ public:
           break;
         }
       }
+    }
+  }
+
+  void moveZeroes(vector<int> &nums) {
+    int n = nums.size(), i = 0, j = 0;
+    while (j < n) {
+      if (nums[j] != 0) {
+        swap(nums[i], nums[j]);
+        i++;
+      }
+      j++;
     }
   }
 };
