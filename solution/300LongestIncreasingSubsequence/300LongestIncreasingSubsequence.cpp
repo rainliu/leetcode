@@ -5,9 +5,6 @@ class Solution {
 public:
   int lengthOfLIS(vector<int> &nums) {
     int n = nums.size();
-    if (n == 0) {
-      return 0;
-    }
     vector<int> E(n, 0);
     int global = 0;
     for (int i = 0; i < n; i++) {
