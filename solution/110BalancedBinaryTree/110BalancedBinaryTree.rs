@@ -22,8 +22,8 @@ impl Solution {
     pub fn is_balanced(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
         if let Some(node) = root {
             let mut p = node.borrow_mut();
-            let mut left = p.left.take();
-            let mut right = p.right.take();
+            let left = p.left.take();
+            let right = p.right.take();
             let left_depth = Self::max_depth(left.as_ref());
             let right_depth = Self::max_depth(right.as_ref());
             return (left_depth-right_depth).abs() <=1 && Self::is_balanced(left) && Self::is_balanced(right);
