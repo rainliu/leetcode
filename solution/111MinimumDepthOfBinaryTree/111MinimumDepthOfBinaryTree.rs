@@ -37,3 +37,21 @@ impl Solution {
         }
     }
 }
+
+impl Solution2 {
+    pub fn min_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+        match root {
+            Some(node) => {
+                let mut p = node.borrow_mut();
+                if p.left.is_none() && p.right.is_none() {
+                    1    
+                }else {
+                    let left = if p.left.is_some() {Self::min_depth(p.left.take())} else {std::i32::MAX};
+                    let right = if p.right.is_some() {Self::min_depth(p.right.take())} else {std::i32::MAX};
+                    1 + std::cmp::min(left, right)
+                }
+            }
+            None => 0,
+        }
+    }
+}
