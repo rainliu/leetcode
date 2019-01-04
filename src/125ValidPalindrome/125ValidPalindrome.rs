@@ -25,6 +25,24 @@ impl Solution {
             }
         }
         true
+    }   
+}
+
+impl FasterSolution {
+    pub fn is_palindrome(s: String) -> bool {
+        let mut iter = s.chars();
+        let mut buf = String::new();
+        while let Some(c) = iter.next() {
+            if c.is_alphanumeric() {
+                buf.push(c.to_ascii_lowercase());
+            }
+        }
+        iter = buf.chars();
+        while let (Some(p), Some(q)) = (iter.next(), iter.next_back()) {
+            if p != q {
+                return false;
+            }
+        }
+        true
     }
-    
 }
