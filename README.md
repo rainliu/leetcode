@@ -3,14 +3,14 @@ leetcode
 
 For C++ solution:
 
-g++ -std=c++11 ./solution/example/example.cpp -o example.exe
+g++ -std=c++11 ./src/example/example.cpp -o example.exe
 
-clang-cl ./solution/example/example.cpp -o example.exe
+clang-cl ./src/example/example.cpp -o example.exe
 
 For C++ lint:
 
-clang-tidy ./solution/example/example.cpp -checks=*
+clang-tidy ./src/example/example.cpp -checks=*
 
 For go solutin:
 
-go run ./solution/example/example.go
+go run ./src/example/example.go
