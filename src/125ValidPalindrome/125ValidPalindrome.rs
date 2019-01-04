@@ -1,34 +1,20 @@
 impl Solution {
     pub fn is_palindrome(s: String) -> bool {
-        if s.len() == 0 {return true;}
-        let s = s.to_lowercase();
         let b = s.as_bytes();
         let mut i = 0;
-        let mut j = b.len() - 1;
-        while i<j && !(b[i] as char).is_alphanumeric() {
-            i += 1;
-        }
-        while i<j && !(b[j] as char).is_alphanumeric() {
-            j -= 1;
-        }
+        let mut j = b.len() as i32 - 1;
         while i<j {
-            if b[i] != b[j] {
-                return false;
-            }
+            while i<j && !(b[i as usize] as char).is_alphanumeric() {i += 1;}
+            while i<j && !(b[j as usize] as char).is_alphanumeric() {j -= 1;}
+            if (b[i as usize] as char).to_ascii_lowercase() != (b[j as usize] as char).to_ascii_lowercase() {return false;}
             i += 1;
             j -= 1;
-            while i<j && !(b[i] as char).is_alphanumeric() {
-                i += 1;
-            }
-            while i<j && !(b[j] as char).is_alphanumeric() {
-                j -= 1;
-            }
         }
         true
-    }   
+    }
 }
 
-impl FasterSolution {
+impl Solution2 {
     pub fn is_palindrome(s: String) -> bool {
         let mut iter = s.chars();
         let mut buf = String::new();
