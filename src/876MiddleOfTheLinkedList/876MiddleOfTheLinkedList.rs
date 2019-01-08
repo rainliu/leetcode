@@ -18,12 +18,9 @@ impl Solution {
     pub fn middle_node(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         let mut slow = &head;
         let mut fast = &head;
-        while let Some(node) = fast.as_ref() {
-            if node.next.is_none() {
-                break;
-            }
+        while fast.is_some() && fast.as_ref().unwrap().next.is_some() {
             slow = &slow.as_ref().unwrap().next;
-            fast = &node.next.as_ref().unwrap().next;
+            fast = &fast.as_ref().unwrap().next.as_ref().unwrap().next;
         }
         Self::clone_list_from_ref(slow)
     }
