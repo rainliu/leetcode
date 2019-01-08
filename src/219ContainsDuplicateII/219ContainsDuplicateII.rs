@@ -18,9 +18,7 @@ impl LessSpaceSolution {
         // assert!(k>0);
         let mut set = std::collections::HashSet::new();
         for i in 0..(nums.len() as i32) {
-            if i-k-1 >= 0 {
-                set.remove(&nums[(i-k-1) as usize]);
-            }
+            if i>k {set.remove(&nums[(i-k-1) as usize]);}
             if set.contains(&nums[i as usize]) {return true;}
             set.insert(nums[i as usize]);
         }
