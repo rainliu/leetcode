@@ -6,10 +6,11 @@ impl Solution {
         if (m*n) as i32 != r*c {return nums;}
         
         let mut result = vec![vec![0;c as usize]; r as usize];
+        let mut k:usize = 0;
         for j in 0..r as usize {
             for i in 0..c as usize{
-                let k = j*(c as usize)+i;
                 result[j][i] = nums[k/n][k%n];
+                k += 1;
             }
         }
         result
