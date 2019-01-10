@@ -15,3 +15,16 @@ impl Solution {
         -1
     }
 }
+
+impl LessSpaceSolution {
+    pub fn pivot_index(nums: Vec<i32>) -> i32 {
+        let n = nums.len();
+        let sum:i32 = nums.iter().sum();
+        let mut left = 0;
+        for i in 0..n {
+            if left == sum-left-nums[i] {return i as i32;}
+            left += nums[i];
+        }
+        -1
+    }
+}
