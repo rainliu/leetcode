@@ -27,3 +27,24 @@ impl Solution {
         global as i32
     }
 }
+
+impl Solution2 {
+    pub fn max_dist_to_closest(seats: Vec<i32>) -> i32 {
+        let n = seats.len();
+        let mut global = 0;
+        let mut i = 0;
+        while i < n && seats[i]==1 {i+=1;}
+        let mut j = i;
+        while j < n {
+            while j < n && seats[j]==0 {j+=1;}
+            if i==0 || j==n {
+                global = std::cmp::max(global, j-i);
+            }else{
+                global = std::cmp::max(global, (j-i+1)/2);
+            }
+            while j < n && seats[j]==1 {j+=1;}
+            i = j;
+        }
+        global as i32
+    }
+}
