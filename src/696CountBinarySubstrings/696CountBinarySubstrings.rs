@@ -19,3 +19,23 @@ impl Solution {
         result as i32
     }
 }
+
+impl Solution2 {
+    pub fn count_binary_substrings(s: String) -> i32 {
+        let n = s.len();
+        let s = s.into_bytes();
+        let mut result = 0;
+        let mut i = 0;
+        let mut j = 0;
+        let mut pre = 0;
+        let mut cur = 0;
+        while j<n {
+            pre = cur;
+            while j<n && s[j]==s[i] {j+=1;}
+            cur = j-i;
+            i = j;
+            result+=std::cmp::min(pre,cur);
+        }
+        result as i32
+    }
+}
