@@ -17,8 +17,8 @@
 
 use std::collections::BinaryHeap;
 use std::cmp::Reverse;
-
 use std::cmp::Ordering;
+
 impl Ord for ListNode {
     fn cmp(&self, other: &ListNode) -> Ordering {
         self.val.cmp(&other.val)
@@ -43,11 +43,15 @@ impl Solution {
         let mut dummy = ListNode::new(0);
         let mut p = &mut dummy;
         while !min_heap.is_empty() {
-            let mut list = min_heap.pop().unwrap();
-            if let Some(ln) = list.0.next.take(){
+            //https://doc.rust-lang.org/src/core/cmp.rs.html#423
+            //pub struct Reverse<T>(pub T);
+            //Reverse is tuple-style struct, therefore, 
+            //use .0 for access the internal data
+            let mut list = min_heap.pop().unwrap().0;
+            if let Some(ln) = list.next.take(){
                 min_heap.push(Reverse(ln));
             } 
-            p.next = Some(list.0);
+            p.next = Some(list);
             p = p.next.as_mut().unwrap();
         }
         
