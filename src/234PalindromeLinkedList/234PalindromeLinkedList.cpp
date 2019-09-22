@@ -4,6 +4,70 @@ using namespace std;
 
 /**
  * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution2 {
+public:
+    bool isPalindrome(ListNode* head) {
+        if (head==nullptr) return true;
+        
+        ListNode dummy = ListNode(0);
+        dummy.next = head;
+        
+        ListNode *p = head;
+        int len = 0;
+        while (p!=nullptr){
+            p=p->next;
+            ++len;
+        }
+      
+        int i = 0;
+        
+        p = &dummy;
+        ListNode *q = head;
+        while (i<(len+1)/2){
+            p=p->next;
+            q=q->next;
+            ++i;
+        }
+        p->next=nullptr;  
+        
+        p = reverse(head);        
+        if (len&1) {
+            p=p->next;
+        }
+        
+        while (q!=nullptr){
+            if (p->val != q->val) {
+                return false;
+            }
+            p = p->next;
+            q = q->next;
+        }
+        
+        return true;
+    }
+    
+    ListNode* reverse(ListNode* head) {       
+        ListNode *r = nullptr;
+        ListNode *p = head;
+        while (p!=nullptr){
+            ListNode *q = p->next;
+            p->next = r;
+            r = p;    
+            p = q;
+        }
+        
+        return r;
+    }
+};
+
+/**
+ * Definition for singly-linked list.
  */
 struct ListNode {
   int val;
