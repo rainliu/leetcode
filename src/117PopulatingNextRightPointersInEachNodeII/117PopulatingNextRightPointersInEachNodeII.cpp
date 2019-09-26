@@ -40,6 +40,37 @@ struct TreeLinkNode {
  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 
+class Solution3 {
+public:
+    Node* connect(Node* root) {
+        return connect_helper(root, nullptr);
+    }
+    
+    Node* connect_helper(Node* root, Node* parent) {
+        if (root == nullptr) return nullptr;
+        if (parent == nullptr) {
+            root->next = nullptr;
+        }else{
+            Node* sibling = nullptr;
+            if (parent->right != root) {
+                sibling = parent->right;
+            }
+            Node* next = parent->next;
+            while(sibling == nullptr && next != nullptr) {
+                if (next->left != nullptr) {
+                    sibling = next->left;
+                }else{
+                    sibling = next->right;
+                }
+                next = next->next;
+            }
+            root->next = sibling;
+        }
+        connect_helper(root->right, root);
+        connect_helper(root->left, root);        
+        return root;
+    }
+};
 
 class Solution {
 public:
