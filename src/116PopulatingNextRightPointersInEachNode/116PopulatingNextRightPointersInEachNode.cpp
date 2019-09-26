@@ -66,8 +66,8 @@ public:
         }else if (parent->next != nullptr){
             root->next = parent->next->left;
         }
-        connect_helper(root->left, root);
-        connect_helper(root->right, root);
+	connect_helper(root->right, root);
+	connect_helper(root->left, root);
         return root;
     }
 };
