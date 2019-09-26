@@ -19,7 +19,32 @@
 use std::rc::Rc;
 use std::cell::RefCell;
 impl Solution {
-    pub fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+        pub fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+        Solution::is_valid_bst_recursive(root.as_ref(), None, None)
+    }
+    
+    fn is_valid_bst_recursive(root: Option<&Rc<RefCell<TreeNode>>>, left: Option<i32>, right: Option<i32>) -> bool {
+        if let Some(node) = root {
+            let cur = node.borrow().val;
+            if let Some(l) = left{
+                if cur <= l {
+                    return false;
+                }
+            }
+            if let Some(r) = right{
+                if cur >= r {
+                    return false;
+                }
+            }
+            
+            Solution::is_valid_bst_recursive(node.borrow().left.as_ref(), left, Some(cur)) &&
+            Solution::is_valid_bst_recursive(node.borrow().right.as_ref(), Some(cur), right) 
+        }else{
+            true
+        }
+    }
+    
+    pub fn is_valid_bst2(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
         if let Some(node) = root {
             let left = Solution::is_valid_bst_most(node.borrow().left.as_ref(), false);
             let right = Solution::is_valid_bst_most(node.borrow().right.as_ref(), true);
