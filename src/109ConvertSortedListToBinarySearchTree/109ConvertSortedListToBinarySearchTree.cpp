@@ -54,6 +54,38 @@ public:
     }
 };
 
+
+class Solution2 {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        int n = 0;
+        ListNode*p = head;
+        while(p!=nullptr){
+            p = p->next;
+            ++n;
+        }
+        return sortedListToBSTHelper(head, n);
+    }
+    
+    TreeNode* sortedListToBSTHelper(ListNode* head, int n) {
+        if (n==0) {
+            return nullptr;
+        }
+        ListNode* p = head;
+        int i = 0;
+        while (p!=nullptr && i<(n-1)/2){
+            p = p->next;
+            ++i;
+        }
+        
+        TreeNode* root = new TreeNode(p->val);
+        root->left  = sortedListToBSTHelper(head, (n-1)/2);
+        root->right = sortedListToBSTHelper(p->next, n-1-(n-1)/2);
+        
+        return root;
+    }
+};
+
 int main(){
 	Solution s;
 
