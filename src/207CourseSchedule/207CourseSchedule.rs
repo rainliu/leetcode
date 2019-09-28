@@ -19,7 +19,6 @@ impl Solution {
         let mut visited = vec![VisitState::Unvisited; num_courses as usize];
         for key in map.keys() {
             if visited[*key as usize] == VisitState::Unvisited {
-                visited[*key as usize] = VisitState::Visited;
                 if Solution::dfs(&map, &mut visited, *key) {
                     return false;
                 }
