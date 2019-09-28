@@ -30,3 +30,16 @@ public:
         return local;
     }
 };
+
+class Solution2 {
+public:
+    int longestConsecutive(TreeNode* root) {
+        return longestConsecutiveHelper(root, nullptr, 0);
+    }
+    
+    int longestConsecutiveHelper(TreeNode* root, TreeNode* parent, int len) {
+        if (root==nullptr) return 0;
+        len = (parent!=nullptr && root->val == parent->val+1) ? len+1 : 1;
+        return max(max(len, longestConsecutiveHelper(root->left, root, len)), longestConsecutiveHelper(root->right, root, len));
+    }
+};
