@@ -30,4 +30,33 @@ public:
   }
 };
 
+class Solution2 {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        ListNode dummy = ListNode(0);
+        dummy.next = head;
+        
+        ListNode* r = nullptr;
+        ListNode* q = &dummy;
+        ListNode* p = head;
+        while (p!=nullptr) {
+            q->next = p->next;
+            q = q->next;
+            r = p;
+            if (q!=nullptr){
+                p->next = q->next;
+                p = q->next;
+            }else{
+                p->next = q;
+                p = q;
+            }
+        }
+        if (r!=nullptr) {
+            r->next = dummy.next;
+        }
+        
+        return head;
+    }
+};
+
 int main() { return 0; }
