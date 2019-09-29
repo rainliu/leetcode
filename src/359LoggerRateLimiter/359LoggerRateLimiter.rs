@@ -59,9 +59,8 @@ impl Logger {
         If this method returns false, the message will not be printed.
         The timestamp is in seconds granularity. */
     fn should_print_message(&mut self, timestamp: i32, message: String) -> bool {
-        while !self.queue.is_empty() {
-            let (ts, msg) = self.queue.front().unwrap();
-            if *ts+10 <= timestamp {
+        while let Some(ts_msg) = self.queue.front() {
+            if timestamp-ts_msg.0 >= 10  {
                 self.queue.pop_front();
             }else{
                 break;
