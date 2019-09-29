@@ -45,11 +45,10 @@ public:
             r = p;
             if (q!=nullptr){
                 p->next = q->next;
-                p = q->next;
             }else{
                 p->next = q;
-                p = q;
             }
+            p = p->next;
         }
         if (r!=nullptr) {
             r->next = dummy.next;
