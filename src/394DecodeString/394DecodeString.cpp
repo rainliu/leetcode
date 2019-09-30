@@ -1,3 +1,34 @@
+class Solution2 {
+public:
+    string decodeString(string s) {
+        int i = 0;
+        return dfs(s, i);
+    }
+    
+    string dfs(string& s, int& i) {
+        string result;
+        while (i < s.size() && s[i] != ']') {
+            if (!(s[i]>='0'&&s[i]<='9')){
+                result += s[i++];
+            }else{
+                int k = 0;
+                while (s[i]>='0'&&s[i]<='9'){
+                    k = k*10+s[i++]-'0';
+                }
+                
+                ++i; // eat '['
+                string t = dfs(s, i);
+                ++i; // eat ']'
+                while (k-->0) {
+                    result += t;
+                }
+            }
+        }   
+        
+        return result;
+    }
+};
+
 class Solution {
 public:
     string decodeString(string s) {
