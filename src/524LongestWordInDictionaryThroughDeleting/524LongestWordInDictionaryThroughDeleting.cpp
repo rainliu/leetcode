@@ -1,5 +1,18 @@
 class Solution {
 public:
+    string findLongestWord2(string s, vector<string>& d) {
+        string global = ""; 
+        for (const auto& a: d) {
+            if (containWord(s, a) && 
+                (a.size()>global.size() || 
+                 (a.size()==global.size() && a < global))
+               ) {
+                global = a;
+            }
+        }
+        return global;
+    }
+    
     string findLongestWord(string s, vector<string>& d) {
         sort(d.begin(), d.end(), [](const string& a, const string& b) {
             return a.size() > b.size() || (a.size() == b.size() && a < b);    
