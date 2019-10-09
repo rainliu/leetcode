@@ -32,18 +32,10 @@ public:
         }
         auto left_forest = delNodesHelper(root->left, root, true, to_delete_set);
         auto right_forest = delNodesHelper(root->right, root, false, to_delete_set);
-        MoveAppend(left_forest, result);    
-        MoveAppend(right_forest, result);
+        
+        std::move(left_forest.begin(), left_forest.end(), std::back_inserter(result));    
+        std::move(right_forest.begin(),right_forest.end(), std::back_inserter(result));
+        
         return result;
-    }
-            
-    void MoveAppend(std::vector<TreeNode*>& src, std::vector<TreeNode*>& dst) {
-        if (dst.empty()){
-            dst = std::move(src);
-        }else {
-            dst.reserve(dst.size() + src.size());
-            std::move(std::begin(src), std::end(src), std::back_inserter(dst));
-            src.clear();
-        }
     }
 };
