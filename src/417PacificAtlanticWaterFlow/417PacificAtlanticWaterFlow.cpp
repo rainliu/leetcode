@@ -7,51 +7,10 @@ public:
         int m = matrix.size(); if(m==0) return result;
         int n = matrix[0].size(); if(n==0) return result;
         vector<vector<int>> visited(m, vector<int>(n, 0));
-        queue<pair<int,int>> q;
-        for(int i=0; i<n; ++i){
-            q.push({i,0});
-            visited[0][i] |= 0x1;
-        }
-        for(int j=1; j<m; ++j){
-            q.push({0,j});
-            visited[j][0] |= 0x1;
-        }
-        while(!q.empty()){
-            auto [i, j] = q.front(); q.pop();
-            for(int d=0; d<4; ++d){
-                int x = i+offset_x[d];
-                int y = j+offset_y[d];
-                if(x>=0&&x<n&&y>=0&&y<m&&
-                   (visited[y][x]&0x1)==0&&
-                   matrix[y][x]>=matrix[j][i]){
-                    q.push({x,y});
-                    visited[y][x] |= 0x1;
-                }
-            }
-        }
         
-        queue<pair<int,int>> p;
-        for(int i=0; i<n; ++i){
-            p.push({i,m-1});
-            visited[m-1][i] |= 0x2;
-        }
-        for(int j=0; j<m-1; ++j){
-            p.push({n-1,j});
-            visited[j][n-1] |= 0x2;
-        }
-        while(!p.empty()){
-            auto [i, j] = p.front(); p.pop();
-            for(int d=0; d<4; ++d){
-                int x = i+offset_x[d];
-                int y = j+offset_y[d];
-                if(x>=0&&x<n&&y>=0&&y<m&&
-                   (visited[y][x]&0x2)==0&&
-                   matrix[y][x]>=matrix[j][i]){
-                    p.push({x,y});
-                    visited[y][x] |= 0x2;
-                }
-            }
-        }
+        bfs(matrix, visited, 0x1, m, n);
+        bfs(matrix, visited, 0x2, m, n);
+        
         for(int j=0; j<m; ++j){
             for(int i=0; i<n; ++i){
                 if(visited[j][i]==0x3){
@@ -60,5 +19,31 @@ public:
             }
         }
         return result;
+    }
+    
+    void bfs(vector<vector<int>>& matrix, vector<vector<int>>& visited, int mask, int m, int n) {
+        queue<pair<int,int>> q;
+        for(int i=0; i<n; ++i){
+            q.push({i, mask == 0x1 ? 0: m-1});
+            visited[mask == 0x1 ? 0: m-1][i] |= mask;
+        }
+        int offset = mask == 0x1 ? 0 : 1; 
+        for(int j=1-offset; j<m-offset; ++j){
+            q.push({mask == 0x1 ? 0: n-1, j});
+            visited[j][mask == 0x1 ? 0: n-1] |= mask;
+        }
+        while(!q.empty()){
+            auto [i, j] = q.front(); q.pop();
+            for(int d=0; d<4; ++d){
+                int x = i+offset_x[d];
+                int y = j+offset_y[d];
+                if(x>=0&&x<n&&y>=0&&y<m&&
+                   (visited[y][x]&mask)==0&&
+                   matrix[y][x]>=matrix[j][i]){
+                    q.push({x,y});
+                    visited[y][x] |= mask;
+                }
+            }
+        }
     }
 };
