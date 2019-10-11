@@ -1,3 +1,58 @@
+class Solution {
+    static constexpr int offset_x[9] = {0,3,6,0,3,6,0,3,6};
+    static constexpr int offset_y[9] = {0,0,0,3,3,3,6,6,6};
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int m = board.size(); if(m==0) return false;
+        int n = board[0].size(); if(n==0) return false;
+        for(int j = 0; j < m; ++j) {
+            unordered_set<int> s;
+            for(int i = 0; i < n; ++i){
+                if(board[j][i] != '.') {
+                    int d = board[j][i]-'0';
+                    if(s.find(d) != s.end()) {
+                        return false;
+                    }else{
+                        s.insert(d);
+                    }
+                }
+            }
+        }
+        
+        for(int i = 0; i < n; ++i) {
+            unordered_set<int> s;
+            for(int j = 0; j < m; ++j){
+                if(board[j][i] != '.') {
+                    int d = board[j][i]-'0';
+                    if(s.find(d) != s.end()) {
+                        return false;
+                    }else{
+                        s.insert(d);
+                    }
+                }
+            }
+        }
+        for(int k=0; k<9; ++k){
+            unordered_set<int> s;
+            for(int y=0; y<3; ++y){
+                for(int x=0; x<3; ++x){
+                    int i = offset_x[k]+x;
+                    int j = offset_y[k]+y;
+                    if(board[j][i] != '.') {
+                        int d = board[j][i]-'0';
+                        if(s.find(d) != s.end()) {
+                            return false;
+                        }else{
+                            s.insert(d);
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
