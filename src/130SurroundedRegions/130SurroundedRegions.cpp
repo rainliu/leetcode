@@ -1,3 +1,74 @@
+class UnionFind{
+    vector<int> id;
+    vector<int> sz;
+    int cnt;
+    
+public:
+    UnionFind(int N){
+        cnt = N;
+        id.resize(N);
+        sz.resize(N);
+        for(int i=0; i<N; ++i){
+            id[i]=i;
+            sz[i]=1;
+        }
+    }
+    
+    int Find(int i){
+        while(i!=id[i]){
+            id[i]=id[id[i]];
+            i=id[i];
+        }
+        return i;
+    }
+    
+    void Union(int p, int q){
+        int i = Find(p);
+        int j = Find(q);
+        if(i==j) return;
+        else if (sz[i]<sz[j]) {
+            id[i]=j; sz[j]+=sz[i];
+        }else{
+            id[j]=i; sz[i]+=sz[j];
+        }
+        --cnt;
+    }
+    int Count(){
+        return cnt;
+    }
+};
+
+class Solution {
+public:
+    void solve(vector<vector<char>>& board) {
+        int m=board.size(); if(m==0) return;
+        int n=board[0].size(); if(n==0) return;
+        UnionFind uf(m*n);
+        for(int j=0; j<m; ++j){
+            for(int i=0; i<n; ++i){
+                if(board[j][i]=='O'){
+                    if(i==0||j==0||i==n-1||j==m-1){
+                        uf.Union(0, j*n+i);
+                    }
+                    if(i>0&&board[j][i-1]=='O'){
+                        uf.Union(j*n+i-1, j*n+i);
+                    }
+                    if(j>0&&board[j-1][i]=='O'){
+                        uf.Union((j-1)*n+i, j*n+i);
+                    }
+                }
+            }
+        }
+        for(int j=0; j<m; ++j){
+            for(int i=0; i<n; ++i){
+                if(board[j][i]=='O'&&uf.Find(j*n+i)!=uf.Find(0)){
+                    board[j][i]='X';
+                }
+            }
+        }
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
