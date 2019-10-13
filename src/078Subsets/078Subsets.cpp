@@ -17,6 +17,48 @@ public:
     }
 };
 
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> results;
+        vector<bool> a;
+        backtracking(a, 0, nums, results);        
+        return results;
+    }
+    
+    void backtracking(vector<bool>& a, int k, vector<int>& nums, vector<vector<int>>& results){
+        if(is_solution(a, k, nums)){
+            process_solution(a, k, nums, results);
+        }else{
+            auto cands = contruct_candidates(a, k, nums);
+            ++k;
+            for(const auto& cand: cands){
+                a.push_back(cand);
+                backtracking(a, k, nums, results);
+                a.pop_back();
+            }
+        }
+    }
+    
+    bool is_solution(vector<bool>& a, int k, vector<int>& nums) {
+        return k==nums.size();
+    }
+    
+    void process_solution(vector<bool>& a, int k, vector<int>& nums, vector<vector<int>>& results){
+        vector<int> result;
+        for(int i=0; i<a.size(); ++i){
+            if(a[i]){
+                result.push_back(nums[i]);
+            }
+        }
+        results.push_back(result);
+    }
+    
+    vector<bool> contruct_candidates(vector<bool>& a, int k, vector<int>& nums){
+        return vector<bool>{true, false};
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
