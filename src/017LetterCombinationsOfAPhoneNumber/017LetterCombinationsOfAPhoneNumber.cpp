@@ -1,3 +1,57 @@
+class Solution {
+    vector<vector<string>> m{
+        {}, 
+        {}, 
+        {"a","b","c"},
+        {"d","e","f"},
+        {"g","h","i"},
+        {"j","k","l"},
+        {"m","n","o"},
+        {"p","q","r","s"},
+        {"t","u","v"},
+        {"w","x","y","z"},
+    };
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> result;
+        if(digits.size()){
+            vector<string> a;
+            backtracking(a, 0, digits, result);
+        }
+        return result;
+    }
+    
+    void backtracking(vector<string>& a, int k, string& digits, vector<string>& result){
+        if(is_solution(a, k, digits)){
+            process_solution(a, k, digits, result);
+        }else{
+            auto cands = construct_candidates(a, k, digits);
+            ++k;
+            for(const auto& cand : cands){
+                a.push_back(cand);
+                backtracking(a, k, digits, result);
+                a.pop_back();
+            }
+        }
+    }
+    
+    bool is_solution(vector<string>& a, int k, string& digits){
+        return k==digits.size();
+    }
+    
+    void process_solution(vector<string>& a, int k, string& digits, vector<string>& result){
+        ostringstream oss;
+        for(const auto& c: a){
+            oss<<c;
+        }
+        result.push_back(oss.str());
+    }
+    
+    vector<string> construct_candidates(vector<string>& a, int k, string& digits) {
+        return m[digits[k]-'0'];
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
