@@ -1,3 +1,26 @@
+class Solution {
+public:
+    int numDecodings(string s) {
+        int n = s.size();
+        vector<int> D(n+1, 0);
+        D[0]=n>0&&s[0]!='0';
+        D[1]=D[0];
+        for(int i=2; i<=n; ++i){
+            int d = (s[i-2]-'0')*10+s[i-1]-'0';
+            if(d==0) {
+                return 0;
+            }
+            if(d>=10&&d<=26){
+                D[i]+=D[i-2];
+            }
+            if(s[i-1]!='0'){
+                D[i]+=D[i-1];    
+            }
+        }        
+        return D[n];
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
