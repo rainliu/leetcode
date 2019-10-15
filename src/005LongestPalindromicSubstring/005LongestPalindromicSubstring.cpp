@@ -1,3 +1,22 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        vector<vector<bool>> D(s.size(), vector<bool>(s.size(), false));
+        int global = 0;
+        int start = 0;        
+        for(int i=int(s.size())-1; i>=0; --i){
+            for(int j=i; j<s.size(); ++j){
+                D[i][j]=s[i]==s[j]&&(j-i<3 || D[i+1][j-1]);
+                if(D[i][j]&&j-i+1>global){
+                    global = j-i+1;
+                    start = i;
+                }
+            }
+        }
+        return s.substr(start, global);
+    }    
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
