@@ -1,3 +1,38 @@
+class Solution {
+    
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        //D[n]= max(D[k]) for k=0..n-1, if s[k..] is in wordDict
+        int n = s.size();
+        unordered_set<string> dict;
+        for(const auto& word : wordDict){
+            dict.insert(word);
+        }
+        unordered_map<int, bool> m;    
+        return wordBreak(s, dict, n, m);
+    }
+    
+    bool wordBreak(string& s, unordered_set<string>& dict, int n, unordered_map<int, bool>& m){
+        if(n==0) return true;
+        
+        for(int k = n-1; k>=0; --k){
+            if(dict.find(s.substr(k,n-k))!=dict.end()){
+                bool d;
+                if(m.find(k)!=m.end()){
+                    d = m[k];
+                }else{
+                    d = wordBreak(s, dict, k, m);        
+                    m[k] = d;
+                }
+                if(d){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
