@@ -1,3 +1,27 @@
+class Solution {
+    uint8_t LUT[256];
+public:
+    Solution(){
+        for(int i=0; i<256; ++i){
+            int c = 0;
+            for(int j=0; j<8; ++j){
+                c += (i>>j)&0x1;
+            }
+            LUT[i]=c;
+        }
+    }
+    
+    int hammingWeight(uint32_t n) {
+        uint8_t* p = (uint8_t*)&n;
+        int result = 0;
+        for(int i=0; i<4; ++i){
+            result+=LUT[*p++];
+        }
+        return result;
+    }
+};
+
+
 #include <iostream>
 using namespace std;
 
