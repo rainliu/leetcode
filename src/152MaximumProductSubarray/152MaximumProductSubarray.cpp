@@ -1,3 +1,22 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size(); assert(n>0);
+        int local_min = nums[0];
+        int local_max = nums[0];
+        int global = nums[0];
+        
+        for(int i=1; i<n; ++i){
+            int tmp   = max(max(local_min*nums[i], nums[i]), local_max*nums[i]);
+            local_min = min(min(local_min*nums[i], nums[i]), local_max*nums[i]);
+            local_max = tmp;
+            global = max(local_max, global);
+        }
+        
+        return global;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
