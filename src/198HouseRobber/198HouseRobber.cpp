@@ -1,3 +1,17 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        //D[i]=max(nums[i]+D[i-2], D[i-1])
+        vector<int> D(3, 0);
+        for(int i=0; i<nums.size(); ++i){
+            D[0]=max(nums[i]+D[2], D[1]);
+            D[2]=D[1];
+            D[1]=D[0];
+        }
+        return D[0];
+    }
+};
+
 #include <iostream>
 using namespace std;
 
