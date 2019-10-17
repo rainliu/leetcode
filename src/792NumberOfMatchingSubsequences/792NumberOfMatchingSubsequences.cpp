@@ -1,6 +1,27 @@
 class Solution {
 public:
     int numMatchingSubseq(string S, vector<string>& words) {
+        int i=0;
+        vector<int> js(words.size(), 0);
+        while(i<S.size()){
+            for(int j=0; j<words.size(); ++j){
+                if(js[j]<words[j].size() && S[i]==words[j][js[j]]){
+                    ++js[j];
+                }
+            }
+            ++i;
+        }
+        int count = 0;
+        for(int j=0; j<words.size(); ++j){
+            count += js[j]==words[j].size();
+        }
+        return count;
+    }
+};
+
+class Solution {
+public:
+    int numMatchingSubseq(string S, vector<string>& words) {
         unordered_map<string, bool> m;
         int count = 0;
         for(const auto& word : words){
