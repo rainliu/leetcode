@@ -1,3 +1,33 @@
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int m = matrix.size(); if(m==0) return 0;
+        int n = matrix[0].size(); if(n==0) return 0;
+        vector<vector<int>> D(m, vector<int>(n, 0));
+        
+        int global = 0;
+        for(int i=0; i<n; ++i) {
+            D[0][i] = matrix[0][i]=='1';
+            global = max(global, D[0][i]);
+        }
+        for(int j=0; j<m; ++j) {
+            D[j][0] = matrix[j][0]=='1';
+            global = max(global, D[j][0]);
+        }
+        
+        for(int j=1; j<m; ++j){
+            for(int i=1; i<n; ++i){
+                if(matrix[j][i]=='1'){
+                    D[j][i] = min(min(D[j][i-1], D[j-1][i]), D[j-1][i-1])+1;
+                    global = max(global, D[j][i]);
+                }
+            }
+        }
+        return global*global;
+    }
+};
+
+
 #include <iostream>
 #include <vector>
 using namespace std;
