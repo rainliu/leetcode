@@ -1,16 +1,8 @@
 class Solution {
 public:
     vector<int> diffWaysToCompute(string input) {        
-        int n = input.size(); 
-        if(n==0) return vector<int>{0};
-        if(input.find("+")==string::npos&&
-           input.find("-")==string::npos&&
-           input.find("*")==string::npos){
-            return vector<int>{stoi(input)};
-        }
-        
         vector<int> result;        
-        for(int k=0; k<n; ++k){
+        for(int k=0; k<input.size(); ++k){
             char ch = input[k];
             if(ch =='+'||ch=='-'||ch=='*'){
                 auto left = diffWaysToCompute(input.substr(0,k));
@@ -27,6 +19,9 @@ public:
                     }
                 }
             }
+        }
+        if(result.empty()){
+            result.push_back(stoi(input));
         }
         return result;
     }
