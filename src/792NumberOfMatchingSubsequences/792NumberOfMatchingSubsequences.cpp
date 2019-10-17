@@ -1,6 +1,24 @@
 class Solution {
 public:
     int numMatchingSubseq(string S, vector<string>& words) {
+        vector<vector<const char*>> waiting(128, vector<const char*>{});
+        for(const auto& word : words){
+            waiting[word[0]].push_back(word.c_str());
+        }
+        for(const auto& ch: S){
+            auto next = waiting[ch];
+            waiting[ch].clear();
+            for(auto& it : next){
+                waiting[*++it].push_back(it);
+            }
+        }
+        return waiting[0].size();
+    }
+};
+
+class Solution {
+public:
+    int numMatchingSubseq(string S, vector<string>& words) {
         int i=0;
         vector<int> js(words.size(), 0);
         while(i<S.size()){
