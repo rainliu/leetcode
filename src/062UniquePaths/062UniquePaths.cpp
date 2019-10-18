@@ -1,3 +1,16 @@
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<int> D(n, 1);
+        for(int j=1; j<m; ++j){
+            for(int i=1; i<n; ++i){
+                D[i] += D[i-1];
+            }
+        }
+        return D[n-1];
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
