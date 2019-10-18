@@ -1,3 +1,19 @@
+class Solution {
+public:
+    int numTrees(int n) {
+        if(n<=0) return 0;
+        vector<int> D(n+1, 0);
+        D[0] = 1;
+        D[1] = 1;
+        for(int j=2; j<=n; ++j){
+            for(int i=1; i<=j; ++i){
+                D[j]+= D[i-1]*D[j-i];
+            }        
+        }
+        return D[n];
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
