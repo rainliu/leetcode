@@ -5,7 +5,7 @@ public:
         int n = matrix[0].size(); if(n==0) return false;
         int row = m-1;
         int col = 0;
-        while(col>=0&&col<n&&row>=0&&row<m){
+        while(col<n&&row>=0){
             if(matrix[row][col]==target) return true;
             else if (matrix[row][col]>target) --row;
             else ++col;
