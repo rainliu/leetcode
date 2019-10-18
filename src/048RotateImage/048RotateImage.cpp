@@ -1,3 +1,20 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int m = matrix.size(); if(m==0) return;
+        int n = matrix[0].size(); if(n==0) return;
+        if(m!=n) return;
+        for(int j=0; j<n/2; ++j){
+            swap(matrix[j], matrix[n-1-j]);
+        }
+        for(int j=0; j<n; ++j){
+            for(int i=j+1; i<n; ++i){
+                swap(matrix[j][i], matrix[i][j]);
+            }
+        }
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
