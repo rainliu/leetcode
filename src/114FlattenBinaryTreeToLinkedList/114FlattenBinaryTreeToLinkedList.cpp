@@ -1,3 +1,26 @@
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        flatten_helper(root);
+    }
+    
+    pair<TreeNode*, TreeNode*> flatten_helper(TreeNode* root){
+        if(root==nullptr) return {nullptr, nullptr};
+        if(root->left==nullptr&&root->right==nullptr) return {root, root};
+        
+        auto [left_head, left_tail] = flatten_helper(root->left);
+        auto [right_head, right_tail] = flatten_helper(root->right);
+        root->left = nullptr;
+        if(left_head!=nullptr){
+            root->right = left_head;
+            left_tail->right = right_head;
+        }else{
+            root->right = right_head;
+        }
+        return {root, right_tail==nullptr? left_tail: right_tail};
+    }
+};
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
