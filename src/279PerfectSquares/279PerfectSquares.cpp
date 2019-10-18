@@ -1,3 +1,18 @@
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> D(n+1, 0);
+        for(int k=1; k<=n; ++k){
+            int local = numeric_limits<int>::max();
+            for(int i=1; i*i<=k; ++i){
+                local = min(local, D[k-i*i]+1);
+            }
+            D[k]=local;
+        }
+        return D[n];
+    }
+};
+
 #include <iostream>
 using namespace std;
 
