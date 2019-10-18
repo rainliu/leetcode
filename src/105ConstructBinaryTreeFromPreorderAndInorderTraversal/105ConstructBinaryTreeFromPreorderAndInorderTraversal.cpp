@@ -1,3 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        unordered_map<int, int> preorder_map;
+        unordered_map<int, int> inorder_map;
+        for(int i=0; i<preorder.size(); ++i){
+            preorder_map[preorder[i]] = i;
+            inorder_map[inorder[i]] = i;
+        }
+        return buildTree(preorder, preorder_map, 0, int(preorder.size())-1, 
+                         inorder,  inorder_map,  0, int(inorder.size())-1);
+    }
+    
+    TreeNode* buildTree(vector<int>& preorder, unordered_map<int, int>& preorder_map, int pre_lo, int pre_hi, 
+                        vector<int>& inorder,  unordered_map<int, int>& inorder_map,  int in_lo,  int in_hi){
+        if(pre_lo > pre_hi) return nullptr;
+        
+        TreeNode* root = new TreeNode(preorder[pre_lo]);
+        
+        int mi = inorder_map[preorder[pre_lo]]-in_lo;
+        root->left  = buildTree(preorder, preorder_map, pre_lo+1, pre_lo+mi,
+                                inorder,  inorder_map,  in_lo, in_lo+mi-1);
+        root->right = buildTree(preorder, preorder_map, pre_lo+mi+1, pre_hi, 
+                                inorder,  inorder_map,  in_lo+mi+1, in_hi);
+        return root;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
