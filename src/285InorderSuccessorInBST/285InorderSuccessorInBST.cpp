@@ -1,3 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        stack<TreeNode*> s;
+        TreeNode* pre = nullptr;
+        while(root!=nullptr || !s.empty()) {
+            if(root!=nullptr){
+                s.push(root);
+                root = root->left;
+            }else{
+                root = s.top(); s.pop();
+                if(pre==p){
+                    return root;
+                }
+                pre = root;
+                root = root->right;
+            }
+        }
+        return nullptr;
+    }
+};
+
 #include <iostream>
 using namespace std;
 
