@@ -1,3 +1,48 @@
+struct Node{
+    vector<Node*> next;
+    Node(){
+        next.resize(2, nullptr);
+    }
+};
+
+class Solution {
+    Node* put(Node* x, int num, int d){
+        if(x==nullptr) x = new Node();
+        if(d>=0){
+            int c = (num>>d)&0x1;
+            x->next[c] = put(x->next[c], num, d-1);
+        }
+        return x;
+    }
+    
+    int get(Node* x, int num){
+        int local = 0;
+        for(int d=31; d>=0; --d){
+            int c = (num>>d)&0x1;
+            if(x->next[1-c]!=nullptr){
+                local |= 1<<d;
+                x = x->next[1-c];
+            }else{
+                x = x->next[c];
+            }
+        }
+        return local;
+    }
+    
+public:
+    int findMaximumXOR(vector<int>& nums) {
+        Node* root = nullptr;
+        for(const auto& num : nums){
+            root = put(root, num, 31);
+        }
+        int global = 0;
+        for(const auto& num : nums){
+            global = max(global, get(root, num));
+        }
+        return global;
+    }
+};
+
 class Solution {
 private:
     struct Trie{
