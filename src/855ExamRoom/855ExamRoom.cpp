@@ -11,6 +11,50 @@ public:
         if(s.size()>0){
             auto cur = s.begin();
             auto pre = s.end();
+            int dist = *cur;
+            while(cur!=s.end()){
+                if(pre!=s.end()){
+                    if((*cur-*pre)/2 > dist){
+                        dist = (*cur-*pre)/2;
+                        student = *pre + dist;
+                    }
+                }
+                pre = cur;
+                ++cur;
+            }    
+            if(N-1-*pre>dist){                        
+                student = N-1;
+            }
+        }        
+        s.insert(student);
+        return student;
+    }
+    
+    void leave(int p) {
+        s.erase(p);
+    }
+};
+
+/**
+ * Your ExamRoom object will be instantiated and called as such:
+ * ExamRoom* obj = new ExamRoom(N);
+ * int param_1 = obj->seat();
+ * obj->leave(p);
+ */
+
+class ExamRoom {
+    set<int> s;
+    int N;
+public:
+    ExamRoom(int N) {
+        this->N = N;
+    }
+    
+    int seat() {
+        int student = 0;
+        if(s.size()>0){
+            auto cur = s.begin();
+            auto pre = s.end();
             int distance = *cur;
             while(cur!=s.end()){
                 if(pre!=s.end()){
