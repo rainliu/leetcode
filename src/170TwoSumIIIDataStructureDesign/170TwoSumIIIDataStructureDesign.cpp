@@ -1,3 +1,41 @@
+class TwoSum {
+    unordered_map<int, int> m;
+public:
+    /** Initialize your data structure here. */
+    TwoSum() {
+        
+    }
+    
+    /** Add the number to an internal data structure.. */
+    void add(int number) {
+        ++m[number];
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    bool find(int value) {
+        for(const auto& [key, count] : m){
+            int key2 = value-key;
+            if(m.find(key2)!=m.end()){
+                if(key2==key){
+                    if(m[key2]>1){
+                        return true;
+                    }
+                }else{
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+/**
+ * Your TwoSum object will be instantiated and called as such:
+ * TwoSum* obj = new TwoSum();
+ * obj->add(number);
+ * bool param_2 = obj->find(value);
+ */
+
 #include <sstream>
 #include <iostream>
 #include <vector>
