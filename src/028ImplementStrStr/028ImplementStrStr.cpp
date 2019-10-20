@@ -1,3 +1,27 @@
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int N = haystack.size();
+        int M = needle.size();
+        vector<int> right(128, -1);
+        for(int j=0; j<M; ++j){
+            right[needle[j]] = j;
+        }
+        int skip;
+        for(int i=0; i<=N-M; i+=skip){
+            skip = 0;
+            for(int j=M-1; j>=0; --j){
+                if(needle[j]!=haystack[i+j]){
+                    skip=max(1, j-right[haystack[i+j]]);
+                    break;
+                }
+            }
+            if(skip==0) return i;
+        }
+        return -1;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
