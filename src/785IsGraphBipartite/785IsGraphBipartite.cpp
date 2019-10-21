@@ -1,6 +1,33 @@
 class Solution {
 public:
     bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> colormap(n, -1);
+        for(int i=0; i<graph.size(); ++i){
+            if(colormap[i]==-1){
+                queue<pair<int,int>> q;               
+                q.push({i, 0});
+                colormap[i]=0;
+                while(!q.empty()){
+                    auto [v, color] = q.front(); q.pop();
+                    for(const auto& u : graph[v] ){
+                        if(colormap[u]==color){
+                            return false;
+                        }else if(colormap[u]==-1){
+                            q.push({u, 1-color});
+                            colormap[u]=1-color;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
+
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
         unordered_set<int> colormap[2];
         for(int i=0; i<graph.size(); ++i){
             if(colormap[0].find(i)==colormap[0].end()&&
