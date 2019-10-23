@@ -1,6 +1,24 @@
 class Solution {
 public:
     int findTargetSumWays(vector<int>& nums, int S) {
+        vector<vector<int>> D(nums.size(), vector<int>(1000*2+1, 0));
+        D[0][nums[0]+1000]+=1;
+        D[0][-nums[0]+1000]+=1;
+        for(int i=1; i<nums.size(); ++i){
+            for(int sum=-1000; sum<=1000; ++sum){
+                if(D[i-1][sum+1000]>0){
+                    D[i][sum+nums[i]+1000] += D[i-1][sum+1000];
+                    D[i][sum-nums[i]+1000] += D[i-1][sum+1000];
+                }
+            }
+        }
+        return S > 1000 ? 0 : D[nums.size()-1][S+1000];
+    }
+};
+
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int S) {
         int global = 0;
         backtracking(0, nums, S, global);
         return global;
