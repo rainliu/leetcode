@@ -3,17 +3,16 @@ public:
     int coinChange(vector<int>& coins, int amount) {
         // D[W] = min(for any wj<=W, 1+D[W-wj])
         if(amount<=0) return 0;
-        vector<int> D(amount+1, 0);
+        vector<int> D(amount+1, amount+1);
         D[0] = 0;
         for(int j=1; j<=amount; ++j){
-            D[j]=numeric_limits<int>::max();
             for(const auto& coin : coins){
-                if(coin<=j && D[j-coin]!=numeric_limits<int>::max()){
+                if(coin<=j){
                     D[j]=min(D[j], 1+D[j-coin]);    
                 }
             }                                                   
         }
-        return D[amount]==numeric_limits<int>::max()? -1 : D[amount];
+        return D[amount]==amount+1? -1 : D[amount];
     }
 };
 
