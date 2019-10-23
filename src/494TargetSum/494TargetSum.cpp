@@ -1,3 +1,30 @@
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int S) {
+        int global = 0;
+        backtracking(0, nums, S, global);
+        return global;
+    }
+    
+    void backtracking(int k, vector<int>& nums, int S, int& global){
+        if(k==nums.size()&&0==S){
+            ++global;       
+        }else if(k<nums.size()){
+            auto cands = contruct_candidates(k, nums);
+            ++k;
+            for(const auto& cand : cands){
+                S -= cand;
+                backtracking(k, nums, S, global);
+                S += cand;
+            }
+        }
+    }
+    
+    vector<int> contruct_candidates(int k, vector<int>& nums){
+        return vector<int>{nums[k], -nums[k]};
+    }
+};
+
 #include <vector>
 using namespace std;
 
