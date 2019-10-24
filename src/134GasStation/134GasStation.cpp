@@ -1,3 +1,35 @@
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int n = gas.size(); if(n==0) return -1;
+        vector<int> diff(n, 0);
+        int sum = 0, start = -1;
+        for(int i=0; i<n; ++i){
+            diff[i] = gas[i]-cost[i];
+            sum += diff[i];
+            if(diff[i]>=0&&start==-1){
+                start = i;
+            }
+        }
+        
+        if(sum<0) return -1;
+        while(start<n){
+            sum = 0;
+            for(int i=start; i<n; ++i){
+                sum+=diff[i];
+                if(sum<0){
+                    start = i+1;
+                    break;
+                }
+            }
+            if(sum>=0){
+                return start;
+            }
+        }
+        return start>=n ? -1 : start;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
