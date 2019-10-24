@@ -1,3 +1,28 @@
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        int n = nums.size(); if(n==0) return "0";
+        
+        vector<string> strs(n);
+        for(int i=0; i<n; ++i){
+            strs[i] = to_string(nums[i]);
+        }
+        sort(strs.begin(), strs.end(), [](const string& a, const string& b){
+            string ab = a+b;
+            string ba = b+a;
+            return ab > ba;
+        });
+        
+        if(strs[0]=="0") return "0";
+        
+        ostringstream oss;
+        for(const auto& str : strs){
+            oss<<str;
+        }
+        return oss.str();
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
