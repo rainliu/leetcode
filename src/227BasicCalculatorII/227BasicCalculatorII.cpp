@@ -1,3 +1,68 @@
+class Solution {
+public:
+    int calculate(string s) {
+        auto tokens = tokenize(s);
+        
+        vector<string> st;
+
+        int i = 0;
+        while(i<tokens.size()) {
+            if(tokens[i]=="*"||tokens[i]=="/"){
+                auto a = st.back(); st.pop_back();
+                auto b = tokens[i++];
+                auto c = tokens[i++];
+                int d;
+                if(b=="*"){
+                    d = stoi(a)*stoi(c);
+                }else{
+                    d = stoi(a)/stoi(c);
+                }
+                st.push_back(to_string(d));
+            }else{
+                st.push_back(tokens[i++]);
+            }
+        }
+        
+        if(st.empty()) return 0;        
+        reverse(st.begin(), st.end());
+        while(st.size()>1) {
+            auto a = st.back(); st.pop_back();
+            auto b = st.back(); st.pop_back();
+            auto c = st.back(); st.pop_back();
+            int d;
+            if(b=="+"){
+                d = stoi(a)+stoi(c);
+            }else{
+                d = stoi(a)-stoi(c);
+            }
+            st.push_back(to_string(d));
+        }
+        
+        auto a = st.back(); st.pop_back();
+        
+        return stoi(a);
+    }
+    
+    vector<string> tokenize(string& s){
+        vector<string> tokens;
+        int i=0;
+        int j=0;        
+        while(j<s.size()){
+            if(s[j]>='0'&&s[j]<='9'){
+                ++j;
+            }else{
+                if(j>i) tokens.push_back(s.substr(i, j-i));
+                if(s[j]!=' ') tokens.push_back(s.substr(j, 1));
+                ++j;
+                i=j;
+            }
+        }
+        if(j>i) tokens.push_back(s.substr(i, j-i));
+        
+        return tokens;
+    }
+};
+
 #include <iostream>
 #include <stack>
 #include <stdlib.h> /* atoi */
