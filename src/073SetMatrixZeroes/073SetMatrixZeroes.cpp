@@ -3,6 +3,49 @@ public:
     void setZeroes(vector<vector<int>>& matrix) {
         int m = matrix.size(); if(m==0) return;
         int n = matrix[0].size(); if(n==0) return;
+        bool row = false, col = false;
+        for(int j=0; j<m; ++j){
+            for(int i=0; i<n; ++i){
+                if(i==0&&j==0){
+                    row = col = matrix[j][i]==0;
+                }else if(i==0){
+                    col = col || matrix[j][i]==0;   
+                }else if(j==0){
+                    row = row || matrix[j][i]==0;
+                }else{
+                    if(matrix[j][i]==0){
+                        matrix[j][0]=0;
+                        matrix[0][i]=0;
+                    }
+                }
+            }
+        }
+        for(int j=1; j<m; ++j){
+            for(int i=1; i<n; ++i){
+                if(matrix[j][0]==0||matrix[0][i]==0){
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        if(col){
+            for(int j=0; j<m; ++j){
+                matrix[j][0]=0;
+            }
+        }
+        if(row){
+            for(int i=0; i<n; ++i){
+                matrix[0][i]=0;
+            }
+        }
+    }
+};
+
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size(); if(m==0) return;
+        int n = matrix[0].size(); if(n==0) return;
         vector<bool> row(m, false);
         vector<bool> col(n, false);
         for(int j=0; j<m; ++j){
