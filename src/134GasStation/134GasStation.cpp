@@ -26,7 +26,7 @@ public:
                 return start;
             }
         }
-        return start>=n ? -1 : start;
+        return -1;
     }
 };
 
