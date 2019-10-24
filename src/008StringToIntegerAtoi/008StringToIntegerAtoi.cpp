@@ -1,3 +1,33 @@
+class Solution {
+    static constexpr int max_threshold = 214748364;
+public:
+    int myAtoi(string str) {
+        bool sign = false;
+        bool neg = false;
+        int val = 0;
+        for(const auto& ch : str){
+            if(!sign&&ch==' '){
+            }else if(!sign && (ch=='-'||ch=='+')){
+                sign = true;
+                neg = ch=='-';
+            }else if(ch>='0'&&ch<='9'){
+                sign = true;
+                if(val>max_threshold ||
+                   (val == max_threshold && 
+                    ((neg&&ch>='8')||(!neg&&ch>='7'))
+                   )){
+                    return neg ? numeric_limits<int>::min() : numeric_limits<int>::max();
+                }else{
+                    val = val*10+int(ch-'0');
+                }
+            }else{
+                break;
+            }
+        }
+        return neg ? -val : val;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
