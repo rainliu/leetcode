@@ -3,6 +3,28 @@ public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
         int n = gas.size(); if(n==0) return -1;
         vector<int> diff(n, 0);
+        
+        int global = 0;
+        int local = 0;
+        int start = 0;
+        for(int i=0; i<n; ++i){
+            diff[i] = gas[i]-cost[i];
+            global += diff[i];
+            local += diff[i];
+            if(local<0){
+                start = i+1;
+                local = 0;
+            }
+        }
+        return global>=0 ? start : -1;
+    }
+};
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int n = gas.size(); if(n==0) return -1;
+        vector<int> diff(n, 0);
         int sum = 0, start = -1;
         for(int i=0; i<n; ++i){
             diff[i] = gas[i]-cost[i];
