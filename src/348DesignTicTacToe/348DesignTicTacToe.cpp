@@ -5,10 +5,10 @@ class TicTacToe {
 public:
     /** Initialize your data structure here. */
     TicTacToe(int n) {
-        rows.resize(n, numeric_limits<int>::max());
-        cols.resize(n, numeric_limits<int>::max());
-        diagonal = numeric_limits<int>::max();
-        antidiagonal = numeric_limits<int>::max();
+        rows.resize(n, 0);
+        cols.resize(n, 0);
+        diagonal = 0;
+        antidiagonal = 0;
         this->n = n;
     }
     
@@ -22,60 +22,50 @@ public:
                 2: Player 2 wins. */
     int move(int row, int col, int player) {
         int val = player == 1 ? 1:-1;
+        int cnt = player == 1 ? n:-n;
         
-        if(rows[row]==numeric_limits<int>::max()){
-            rows[row] = val;
-        }else if( (rows[row]>0&&player==1) || 
-                  (rows[row]<0&&player==2) ){
+        if((rows[row]==0) ||
+           (rows[row]>0&&player==1) || 
+           (rows[row]<0&&player==2) ){
             rows[row] += val;
-            if(rows[row]==n || rows[row]==-n){
-                return player;
-            }
         }else{
-            rows[row] = 0;
+            rows[row] = n+1;
         }
         
-        if(cols[col]==numeric_limits<int>::max()){
-            cols[col] = val;
-        }else if( (cols[col]>0&&player==1) || 
-                  (cols[col]<0&&player==2) ){
+        if((cols[col]==0) ||
+           (cols[col]>0&&player==1) || 
+           (cols[col]<0&&player==2) ){
             cols[col] += val;
-            if(cols[col]==n || cols[col]==-n){
-                return player;
-            }
         }else{
-            cols[col] = 0;
-        }
-        
+            cols[col] = n+1;
+        }        
     
         if(row==col){
-            if(diagonal==numeric_limits<int>::max()){
-                diagonal = val;
-            }else if( (diagonal>0&&player==1) || 
-                      (diagonal<0&&player==2) ){
-                diagonal += player == 1 ? 1:-1;
-                if(diagonal==n || diagonal==-n){
-                    return player;
-                }
+            if((diagonal==0)||
+               (diagonal>0&&player==1) || 
+               (diagonal<0&&player==2) ){
+                diagonal += val;
             }else{
-                diagonal = 0;
+                diagonal = n+1;
             }
         }
         
         if(n-1-row==col){
-            if(antidiagonal==numeric_limits<int>::max()){
-                antidiagonal = val;
-            }else if( (antidiagonal>0&&player==1) || 
-                      (antidiagonal<0&&player==2) ){
+            if((antidiagonal==0)||
+               (antidiagonal>0&&player==1) || 
+               (antidiagonal<0&&player==2) ){
                 antidiagonal += val;
-                if(antidiagonal==n || antidiagonal==-n){
-                    return player;
-                }
             }else{
-                antidiagonal = 0;
+                antidiagonal = n+1;
             }
         }
-        
+
+        if(rows[row]==cnt || 
+           cols[col]==cnt ||
+           diagonal ==cnt ||
+           antidiagonal==cnt){
+           return player;
+        }
         return 0;
     }
 };
