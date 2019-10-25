@@ -1,3 +1,28 @@
+class Solution {
+    vector<int> original;
+    vector<int> shuffled;
+public:
+    Solution(vector<int>& nums) {
+        original = nums;
+        shuffled = nums;
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        return original;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() {
+        for(int i=0; i<shuffled.size(); ++i){
+            int j = rand()%(i+1);
+            swap(shuffled[i], shuffled[j]);
+        }
+        return shuffled;
+    }
+};
+
+
 #include <vector>
 using namespace std;
 
