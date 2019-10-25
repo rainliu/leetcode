@@ -1,3 +1,89 @@
+class TicTacToe {
+    vector<int> rows, cols;
+    int diagonal, antidiagonal;
+    int n;
+public:
+    /** Initialize your data structure here. */
+    TicTacToe(int n) {
+        rows.resize(n, numeric_limits<int>::max());
+        cols.resize(n, numeric_limits<int>::max());
+        diagonal = numeric_limits<int>::max();
+        antidiagonal = numeric_limits<int>::max();
+        this->n = n;
+    }
+    
+    /** Player {player} makes a move at ({row}, {col}).
+        @param row The row of the board.
+        @param col The column of the board.
+        @param player The player, can be either 1 or 2.
+        @return The current winning condition, can be either:
+                0: No one wins.
+                1: Player 1 wins.
+                2: Player 2 wins. */
+    int move(int row, int col, int player) {
+        if(rows[row]==numeric_limits<int>::max()){
+            rows[row] = player == 1 ? 1:-1;
+        }else if( (rows[row]>0&&player==1) || 
+                  (rows[row]<0&&player==2) ){
+            rows[row] += player == 1 ? 1:-1;
+            if(rows[row]==n || rows[row]==-n){
+                return player;
+            }
+        }else{
+            rows[row] = 0;
+        }
+        
+        if(cols[col]==numeric_limits<int>::max()){
+            cols[col] = player == 1 ? 1:-1;
+        }else if( (cols[col]>0&&player==1) || 
+                  (cols[col]<0&&player==2) ){
+            cols[col] += player == 1 ? 1:-1;
+            if(cols[col]==n || cols[col]==-n){
+                return player;
+            }
+        }else{
+            cols[col] = 0;
+        }
+        
+    
+        if(row==col){
+            if(diagonal==numeric_limits<int>::max()){
+                diagonal = player == 1 ? 1:-1;
+            }else if( (diagonal>0&&player==1) || 
+                      (diagonal<0&&player==2) ){
+                diagonal += player == 1 ? 1:-1;
+                if(diagonal==n || diagonal==-n){
+                    return player;
+                }
+            }else{
+                diagonal = 0;
+            }
+        }
+        
+        if(n-1-row==col){
+            if(antidiagonal==numeric_limits<int>::max()){
+                antidiagonal = player == 1 ? 1:-1;
+            }else if( (antidiagonal>0&&player==1) || 
+                      (antidiagonal<0&&player==2) ){
+                antidiagonal += player == 1 ? 1:-1;
+                if(antidiagonal==n || antidiagonal==-n){
+                    return player;
+                }
+            }else{
+                antidiagonal = 0;
+            }
+        }
+        
+        return 0;
+    }
+};
+
+/**
+ * Your TicTacToe object will be instantiated and called as such:
+ * TicTacToe* obj = new TicTacToe(n);
+ * int param_1 = obj->move(row,col,player);
+ */
+
 #include <vector>
 using namespace std;
 
