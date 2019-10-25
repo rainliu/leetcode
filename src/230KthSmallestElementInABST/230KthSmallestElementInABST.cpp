@@ -1,3 +1,23 @@
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        stack<TreeNode*> s;
+        int count = 0;
+        while(root!=nullptr || !s.empty()){
+            if(root!=nullptr){
+                s.push(root);
+                root = root->left;
+            }else{
+                root = s.top(); s.pop();
+                ++count;
+                if(count==k) return root->val;
+                root = root->right;
+            }
+        }
+        return 0;
+    }
+};
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
