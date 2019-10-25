@@ -21,11 +21,13 @@ public:
                 1: Player 1 wins.
                 2: Player 2 wins. */
     int move(int row, int col, int player) {
+        int val = player == 1 ? 1:-1;
+        
         if(rows[row]==numeric_limits<int>::max()){
-            rows[row] = player == 1 ? 1:-1;
+            rows[row] = val;
         }else if( (rows[row]>0&&player==1) || 
                   (rows[row]<0&&player==2) ){
-            rows[row] += player == 1 ? 1:-1;
+            rows[row] += val;
             if(rows[row]==n || rows[row]==-n){
                 return player;
             }
@@ -34,10 +36,10 @@ public:
         }
         
         if(cols[col]==numeric_limits<int>::max()){
-            cols[col] = player == 1 ? 1:-1;
+            cols[col] = val;
         }else if( (cols[col]>0&&player==1) || 
                   (cols[col]<0&&player==2) ){
-            cols[col] += player == 1 ? 1:-1;
+            cols[col] += val;
             if(cols[col]==n || cols[col]==-n){
                 return player;
             }
@@ -48,7 +50,7 @@ public:
     
         if(row==col){
             if(diagonal==numeric_limits<int>::max()){
-                diagonal = player == 1 ? 1:-1;
+                diagonal = val;
             }else if( (diagonal>0&&player==1) || 
                       (diagonal<0&&player==2) ){
                 diagonal += player == 1 ? 1:-1;
@@ -62,10 +64,10 @@ public:
         
         if(n-1-row==col){
             if(antidiagonal==numeric_limits<int>::max()){
-                antidiagonal = player == 1 ? 1:-1;
+                antidiagonal = val;
             }else if( (antidiagonal>0&&player==1) || 
                       (antidiagonal<0&&player==2) ){
-                antidiagonal += player == 1 ? 1:-1;
+                antidiagonal += val;
                 if(antidiagonal==n || antidiagonal==-n){
                     return player;
                 }
