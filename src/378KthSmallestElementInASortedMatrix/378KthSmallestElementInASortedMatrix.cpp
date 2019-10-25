@@ -1,3 +1,32 @@
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int m = matrix.size(); if(m==0) return 0;
+        int n = matrix[0].size(); if(n==0) return 0;
+        
+        auto cmp = [](const auto& p, const auto& q){
+            return p.first > q.first;    
+        };
+        priority_queue<pair<int, pair<int,int>>, 
+                     vector<pair<int, pair<int,int>>>,
+                     decltype(cmp)> pq(cmp);
+        
+        for(int j=0; j<m; ++j){
+            pq.push({matrix[j][0], {j, 0}});
+        }
+        int result = 0;
+        while(k--){
+            auto [v, p] = pq.top(); pq.pop();
+            p.second += 1;
+            if(p.second < n){
+                pq.push({matrix[p.first][p.second], p});
+            }
+            result = v;
+        }
+        return result;
+    }
+};
+
 #include <iostream>
 #include <priority_queue>
 #include <vector>
