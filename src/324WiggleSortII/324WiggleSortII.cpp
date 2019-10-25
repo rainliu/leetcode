@@ -1,3 +1,22 @@
+class Solution {
+public:
+    void wiggleSort(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<int> result(nums);
+        int n = nums.size();
+        int mi = (n-1)>>1;
+        int i=mi; 
+        int j=n-1;
+        int k=0;
+        while(k<n){
+            nums[k++] = result[i--];
+            if(k<n){
+                nums[k++] = result[j--];
+            }
+        }
+    }
+};
+
 #include <algorithm>
 #include <iostream>
 #include <vector>
