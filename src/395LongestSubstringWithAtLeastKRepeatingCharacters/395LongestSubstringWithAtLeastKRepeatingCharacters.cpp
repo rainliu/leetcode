@@ -1,3 +1,34 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        return longestSubstring(s, k, 0, int(s.size())-1);
+    }
+    int longestSubstring(string& s, int k, int lo, int hi) {
+        if(lo>hi) return 0;
+        unordered_map<char, pair<int,int>> m;
+        int i;
+        for(i=lo; i<=hi; ++i) {
+            auto it = m.find(s[i]);
+            if(it==m.end()){
+                m[s[i]] = {1, i};    
+            }else{
+                ++(it->second.first);
+            }
+        }
+        i = hi+1;
+        for(const auto& [ch, p] : m){
+            if(p.first<k){
+                i = p.second;
+                break;
+            }
+        }
+        if(i>hi) return hi-lo+1;
+        int l = longestSubstring(s, k, lo, i-1);
+        int r = longestSubstring(s, k, i+1, hi);
+        return max(l, r);
+    }
+};
+
 #include <iostream>
 #include <unordered_map>
 using namespace std;
