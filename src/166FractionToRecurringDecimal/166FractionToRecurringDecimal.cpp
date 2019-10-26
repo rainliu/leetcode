@@ -1,3 +1,48 @@
+class Solution {
+public:
+    string fractionToDecimal(int numerator, int denominator) {
+        if(denominator==0) return "";
+        if(denominator==1) return to_string(numerator);
+        if(denominator==-1){
+            if(numerator<0) return to_string(abs((int64_t)numerator));
+            else return "-"+to_string(numerator);
+        }
+        
+        string sign = (numerator>0&&denominator<0) || (numerator<0&&denominator>0) ? "-": "";
+        
+        int64_t numerator2 = abs((int64_t)numerator);
+        int64_t denominator2 = abs((int64_t)denominator);
+        
+        unordered_map<int64_t, int> m;
+        int integer = numerator2/denominator2;
+        numerator2  -= integer*denominator2;
+        string fraction = "";
+        int pos = 0;
+        while(numerator2 != 0){
+            if(m.find(numerator2) != m.end()){
+                //cout<<m[numerator]<<":"<<fraction<<endl;
+                return sign+to_string(integer)+"."+fraction.substr(0, m[numerator2])+"("+fraction.substr(m[numerator2])+")";
+            }
+            m[numerator2] = pos;
+            numerator2 *= 10;
+            if(numerator2 < denominator2){
+                fraction += "0";
+            }else{
+                int integer2 = numerator2/denominator2;
+                numerator2 -= integer2*denominator2;
+                fraction += to_string(integer2);
+            }
+            ++pos;
+        }
+        
+        if(fraction == ""){
+            return sign+to_string(integer);
+        }else{
+            return sign+to_string(integer)+"."+fraction;
+        }
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <string>
