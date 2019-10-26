@@ -1,3 +1,48 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(divisor==0) return numeric_limits<int>::max();
+        if(divisor==1) return dividend;
+        if(dividend==numeric_limits<int>::min()){
+            if(divisor==-1) return numeric_limits<int>::max();
+            if(divisor==1) return dividend;
+        }
+        
+        bool sign = (dividend<0 && divisor>0) || (dividend>0 && divisor<0);
+        int64_t dividend2 = abs(int64_t(dividend));
+        int64_t divisor2 = abs(int64_t(divisor));
+           
+        int result = 0;
+        int r;
+        do{
+            r = divideHelper(dividend2, divisor2);
+            if(r>=0){
+                result += 1<<r;
+                dividend2 -= divisor2<<r;
+            }
+        }while(r>0);
+        return sign ? -result : result;
+    }
+    
+    int divideHelper(int64_t dividend, int64_t divisor) {
+        if(dividend < divisor) return -1;
+        if(dividend == divisor) return 0;
+        int lo = 0;
+        int hi = 31;
+        while(lo<=hi){
+            int mi = lo + ((hi-lo)>>1);
+            int d = dividend>>mi;
+            if(divisor==d) return mi;
+            else if(divisor < d) {
+                lo = mi+1;
+            }else{
+                hi = mi-1;
+            }
+        }
+        return max(hi,0);
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
