@@ -16,29 +16,25 @@ public:
         unordered_map<int64_t, int> m;
         int integer = numerator2/denominator2;
         numerator2  -= integer*denominator2;
-        string fraction = "";
+        
+        ostringstream oss;
         int pos = 0;
         while(numerator2 != 0){
             if(m.find(numerator2) != m.end()){
-                //cout<<m[numerator]<<":"<<fraction<<endl;
+                string fraction = oss.str();
                 return sign+to_string(integer)+"."+fraction.substr(0, m[numerator2])+"("+fraction.substr(m[numerator2])+")";
             }
-            m[numerator2] = pos;
+            m[numerator2] = pos++;
             numerator2 *= 10;
-            if(numerator2 < denominator2){
-                fraction += "0";
-            }else{
-                int integer2 = numerator2/denominator2;
-                numerator2 -= integer2*denominator2;
-                fraction += to_string(integer2);
-            }
-            ++pos;
+            int integer2 = numerator2/denominator2;
+            numerator2 -= integer2*denominator2;
+            oss<<integer2;
         }
         
-        if(fraction == ""){
+        if(oss.str() == ""){
             return sign+to_string(integer);
         }else{
-            return sign+to_string(integer)+"."+fraction;
+            return sign+to_string(integer)+"."+oss.str();
         }
     }
 };
