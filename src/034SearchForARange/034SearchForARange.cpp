@@ -1,3 +1,34 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int lo = 0;
+        int hi = int(nums.size())-1;
+        int mi = binarySearch(nums, target, lo, hi);
+        if(mi==-1) return vector<int>{-1,-1};
+        int right = mi;
+        int left = mi;
+        while((mi=binarySearch(nums, target, mi+1, hi))>=0){
+            right = mi;
+        }
+        mi = left;
+        while((mi=binarySearch(nums, target, lo, mi-1))>=0){
+            left = mi;
+        }
+        return vector<int>{left, right};
+    }
+    
+    int binarySearch(vector<int>& nums, int target, int lo, int hi){
+        if(lo>hi) return -1;
+        while(lo<=hi){
+            int mi = lo + (hi-lo)/2;
+            if(nums[mi]==target) return mi;
+            else if(nums[mi]>target) hi = mi-1;
+            else lo = mi+1;
+        }
+        return -1;
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
