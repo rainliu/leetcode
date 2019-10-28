@@ -1,3 +1,25 @@
+class Solution {
+public:
+    double myPow(double x, int n) {
+        if(x==0) return 0;
+        if(n==0) return 1;
+        if(n<0) {
+            if(n==numeric_limits<int>::min()){
+                return 1.0/(x*myPow(x, -(n+1)));
+            }else{
+                return 1.0/myPow(x,-n);
+            }
+        }
+        if(n==1) return x;
+        double z = myPow(x, n/2);
+        if(n&0x1){
+            return z*z*x;    
+        }else{
+            return z*z;
+        }
+    }
+};
+
 #include <sstream>
 #include <iostream>
 #include <vector>
