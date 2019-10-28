@@ -1,3 +1,28 @@
+class Solution {
+    int depth(TreeNode* root){
+        int depth = 0;
+        while(root!=nullptr){
+            ++depth;
+            root = root->right;
+        }
+        return depth;
+    }
+public:
+    int countNodes(TreeNode* root) {
+        if(root==nullptr) return 0;
+        int count = 1;
+        int left_depth = depth(root->left);
+        int right_depth = depth(root->right);
+        if(left_depth==right_depth){
+            count += (1<<right_depth)-1;
+            return count+countNodes(root->left);
+        }else{
+            count += (1<<left_depth)-1;
+            return count+countNodes(root->right);
+        }
+    }
+};
+
 #include <iostream>
 #include <vector>
 using namespace std;
